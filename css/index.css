@@ -1,0 +1,368 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1F232B;
+    color: white;
+}
+
+.banner-container {
+    position: relative;
+    overflow: hidden;
+    height: 91vh;
+    border-radius: 0 0 70px 70px;
+    top: 65px;
+    animation: fadeInUp 2s ease-in-out;
+}
+
+.banner-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform: scale(1.2);
+    transition: transform 1.2s ease-in-out;
+}
+
+.banner-container:hover .banner-wrapper {
+    transform: scale(1);
+}
+
+.banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.548) 0%, rgba(0, 0, 0, 0.93) 100%);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    transform: scale(1.5);
+}
+
+.banner-container:hover .overlay {
+    opacity: 0;
+}
+
+.banner-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 120px;
+    opacity: 1;
+    animation: zoomIn 2s ease-in-out;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.banner-container:hover .banner-logo {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+.games-block {
+    background-color: #1F232B;
+    width: 62.5%;
+    height: 376px;
+    margin: 0 auto;
+    margin-top: 180px;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    opacity: 1; /* Изначально видимый */
+    transform: translateY(0); /* Без смещения */
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.games-block.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.trailers-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 62.5%;
+    height: 376px;
+    overflow: hidden;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 60px;
+    border-radius: 30px;
+    margin-bottom: 100px;
+    opacity: 1; /* Изначально видимый */
+    transform: translateX(0); /* Без смещения */
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.trailers-block.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Стили для анимаций */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.fade-in-up.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.fade-in-left.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Остальные стили */
+.games-block .title {
+    color: rgb(213, 162, 101);
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.games-block .description {
+    font-size: 30px;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.games-block a {
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: #14171C;
+    padding: 10px 30px;
+    border-radius: 20px;
+    color: #FFF;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.games-block a:hover {
+    color: rgb(213, 162, 101);
+    font-size: 16px;
+}
+
+.games-block .bg {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0 0 30px #0000002c;
+}
+
+.games-block .text {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    color: #FFF;
+}
+
+.trailers-block .bg {
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+    opacity: 0.2;
+}
+
+.trailers-block .bg-1 {
+    background-image: url('imgs/header_banners/btw_1.png');
+}
+
+.trailers-block .bg-2 {
+    background-image: url('imgs/header_banners/btw_2.png');
+}
+
+.trailers-block .bg-3 {
+    background-image: url('imgs/header_banners/btw_3.png');
+}
+
+.trailers-block p {
+    padding-left: 15%;
+}
+
+.trailers-block a {
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: #14171C;
+    padding: 10px 30px;
+    border-radius: 20px;
+    margin-left: 15%;
+    color: #FFF;
+    font-size: 14px;
+    margin-top: 100px;
+    transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.trailers-block a:hover {
+    color: rgb(213, 162, 101);
+    font-size: 16px;
+}
+
+.trailers-block .title {
+    position: absolute;
+    color: rgb(213, 162, 101);
+    margin-bottom: 70px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.trailers-block .description {
+    position: absolute;
+    text-shadow: 0 0 30px #000000ae;
+    font-weight: 800;
+    font-size: 40px;
+}
+
+@media (max-width: 1350px) {
+    .games-block {
+        width: 80%;
+        height: 300px;
+    }
+    .games-block .title {
+        font-size: 15px;
+    }
+    .games-block .description {
+        font-size: 30px;
+    }
+    .trailers-block {
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 80%;
+        height: 300px;
+    }
+    .trailers-block p {
+        padding-left: 7%;
+    }
+    .trailers-block .title {
+        font-size: 15px;
+    }
+    .trailers-block .description {
+        font-size: 30px;
+    }
+    .trailers-block a {
+        margin-left: 7%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .games-block .bg {
+        width: 45%;
+    }
+    .games-block .title {
+        font-size: 13px;
+        text-align: center;
+    }
+    .games-block .description {
+        font-size: 25px;
+        text-align: center;
+    }
+    .games-block a {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .trailers-block .title {
+        font-size: 13px;
+        text-align: center;
+    }
+    .trailers-block .description {
+        font-size: 25px;
+        text-align: center;
+    }
+    .trailers-block, .games-block {
+        height: 280px;
+    }
+}
+
+@media (max-width: 660px) {
+    .games-block {
+        margin-top: 110px;
+    }
+    .trailers-block {
+        grid-template-columns: 1fr;
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+    .games-block {
+        background-color: #00000000;
+    }
+    .trailers-block .bg-3,
+    .trailers-block .bg-2 {
+        display: none;
+    }
+    .games-block .bg {
+        width: 100%;
+        opacity: 0.2;
+    }
+    .games-block .description {
+        text-align: center;
+        font-size: 25px;
+        margin-top: -20px;
+    }
+    .games-block .text {
+        left: 50%;
+        top: 50%;
+        width: 70%;
+    }
+    .trailers-block a {
+        margin-top: 120px;
+    }
+    .games-block a, .trailers-block a  {
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+    }
+    .trailers-block .description {
+        text-align: center;
+    }
+    .trailers-block, .games-block {
+        height: 220px;
+        width: 90%;
+    }
+    .trailers-block .bg {
+        transform: scale(1.3);
+    }
+    .title {
+        display: none;
+    }
+}

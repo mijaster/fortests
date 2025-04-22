@@ -1,0 +1,230 @@
+/* Базовые настройки для анимируемых элементов */
+[data-scroll] {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* 1. Анимация "Каскадные кубики" */
+[data-scroll="cube"] {
+    transform: perspective(1000px) rotateX(90deg) rotateY(20deg) rotateZ(-10deg) scale(0.8);
+    transform-origin: center bottom;
+}
+
+[data-scroll="cube"].visible {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0) rotateY(0) rotateZ(0) scale(1);
+}
+
+/* 2. Анимация "Глитч-эффект" */
+[data-scroll="glitch"] {
+    position: relative;
+}
+
+[data-scroll="glitch"]::before,
+[data-scroll="glitch"]::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+[data-scroll="glitch"]::before {
+    color: #0ff;
+    z-index: -1;
+    transform: translate(-5px, -5px);
+}
+
+[data-scroll="glitch"]::after {
+    color: #f0f;
+    z-index: -2;
+    transform: translate(5px, 5px);
+}
+
+[data-scroll="glitch"].visible {
+    opacity: 1;
+    animation: glitch-anim 0.3s linear 2;
+}
+
+[data-scroll="glitch"].visible::before {
+    animation: glitch-anim 0.3s linear 2 reverse;
+    opacity: 0.7;
+}
+
+[data-scroll="glitch"].visible::after {
+    animation: glitch-anim 0.3s linear 1 reverse;
+    opacity: 0.7;
+}
+
+@keyframes glitch-anim {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
+}
+
+/* 3. Анимация "Голограмма" */
+[data-scroll="hologram"] {
+    transform: translateY(30px);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0), 
+                0 0 20px rgba(0, 255, 255, 0);
+}
+
+[data-scroll="hologram"].visible {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3), 
+                0 0 20px rgba(0, 255, 255, 0.2);
+    animation: hologram-pulse 3s infinite alternate;
+}
+
+@keyframes hologram-pulse {
+    0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.3), 
+                    0 0 20px rgba(0, 255, 255, 0.2); }
+    100% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), 
+                      0 0 30px rgba(0, 255, 255, 0.3); }
+}
+
+/* 4. Анимация "Разлетающиеся частицы" */
+[data-scroll="particles"] {
+    position: relative;
+    overflow: hidden;
+}
+
+[data-scroll="particles"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, white 0%, transparent 70%);
+    opacity: 0;
+    transform: scale(0);
+}
+
+[data-scroll="particles"].visible {
+    opacity: 1;
+}
+
+[data-scroll="particles"].visible::before {
+    animation: particles-explode 1s ease-out forwards;
+}
+
+@keyframes particles-explode {
+    0% { opacity: 1; transform: scale(0); }
+    50% { opacity: 0.8; transform: scale(1.5); }
+    100% { opacity: 0; transform: scale(3); }
+}
+
+/* 5. Анимация "Неоновое свечение" */
+[data-scroll="neon"] {
+    text-shadow: 0 0 0px rgba(255, 255, 255, 0);
+    transform: scale(0.95);
+}
+
+[data-scroll="neon"].visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: neon-glow 1.5s ease-in-out forwards;
+}
+
+@keyframes neon-glow {
+    0% { text-shadow: 0 0 0px rgba(255, 255, 255, 0); }
+    50% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                       0 0 20px rgba(255, 0, 255, 0.6); }
+    100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.3), 
+                        0 0 10px rgba(255, 0, 255, 0.2); }
+}
+
+/* 6. Анимация "3D-переворот" */
+[data-scroll="flip"] {
+    transform-style: preserve-3d;
+    transform: rotateY(90deg);
+    backface-visibility: hidden;
+}
+
+[data-scroll="flip"].visible {
+    opacity: 1;
+    transform: rotateY(0deg);
+    transition: opacity 0.6s ease 0.3s, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 7. Анимация "Морфинг" */
+[data-scroll="morph"] {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+}
+
+[data-scroll="morph"].visible {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    transition: opacity 0.6s ease, clip-path 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* 8. Анимация "Гравитация" */
+[data-scroll="gravity"] {
+    transform: translateY(100px) scale(0.9);
+    filter: blur(2px);
+}
+
+[data-scroll="gravity"].visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.8s ease;
+}
+
+/* 9. Анимация "Кипящая жидкость" */
+[data-scroll="liquid"] {
+    transform: scaleY(0);
+    transform-origin: bottom;
+}
+
+[data-scroll="liquid"].visible {
+    opacity: 1;
+    transform: scaleY(1);
+    animation: liquid-bounce 1.2s cubic-bezier(0.25, 0.1, 0.25, 1.5) forwards;
+}
+
+@keyframes liquid-bounce {
+    0% { transform: scaleY(0); }
+    60% { transform: scaleY(1.1); }
+    80% { transform: scaleY(0.95); }
+    100% { transform: scaleY(1); }
+}
+
+/* 10. Анимация "Матрица" */
+[data-scroll="matrix"] {
+    overflow: hidden;
+}
+
+[data-scroll="matrix"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        transparent 0%, 
+        rgba(0, 255, 0, 0.1) 50%, 
+        transparent 100%);
+    transform: translateY(-100%);
+}
+
+[data-scroll="matrix"].visible {
+    opacity: 1;
+}
+
+[data-scroll="matrix"].visible::before {
+    animation: matrix-fall 1.5s ease-out forwards;
+}
+
+@keyframes matrix-fall {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
