@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Трейлеры - MIJASTER</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/trailers.css">
+    <link rel="stylesheet" href="css/preloader.css">
+    <link rel="icon" href="imgs/logo_icon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="preloader-container" class="preloader"></div>
+    <header id="header-container"></header>
+
+    <main class="trailers-container">
+        <div class="video-player-container">
+            <video class="video-player" poster="games/die/previews/main.png">
+                <source src="games/die/trailers/main.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео тег.
+            </video>
+            <div class="video-controls">
+                <div class="timeline-container">
+                    <input type="range" class="timeline" min="0" max="100" value="0">
+                </div>
+                <div class="controls-bottom">
+                    <div class="left-controls">
+                        <button class="play-pause-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <div class="time-container">
+                            <span class="current-time">00:00</span> / <span class="total-time">00:00</span>
+                        </div>
+                    </div>
+                    <div class="right-controls">
+                        <div class="volume-container">
+                            <button class="volume-btn">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <input type="range" class="volume-slider" min="0" max="100" value="100">
+                        </div>
+                        <button class="fullscreen-btn">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer-container" class="footer-bg"></footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/videoplayer.js"></script>
+</body>
+</html>

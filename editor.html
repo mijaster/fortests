@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор контента</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/preloader.css">
+    <!-- Подключаем Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="imgs/logo_icon.svg">
+</head>
+<body>
+    <div id="statusMessage"></div>
+    <div id="preloader-container" class="preloader"></div>
+    <a href="index.html" class="logo"><img src="imgs/logo.svg" alt="logo"></a>
+    <p class="label">Редактор контента</p>
+    
+    <!-- Вкладки для переключения между редакторами -->
+    <div class="editor-tabs">
+        <button class="tab-btn active" onclick="switchTab('games')"><i class="fas fa-gamepad"></i> Игры</button>
+        <button class="tab-btn" onclick="switchTab('news')"><i class="fas fa-newspaper"></i> Новости</button>
+        <button class="tab-btn" onclick="switchTab('devs')"><i class="fas fa-users"></i> Разработчики</button>
+    </div>
+
+    <!-- Основной редактор игр -->
+    <div class="main-container" id="gamesEditor">
+        <!-- Левая колонка: Настройки игры -->
+        <div class="form-section">
+            <h2><i class="fas fa-gamepad"></i> Управление играми</h2>
+            <div class="games-list" id="gamesList">
+            </div>
+            <h3 id="formTitle"><i class="fas fa-plus-circle"></i> Добавить новую игру</h3>
+            <!-- Горизонтальная группа: ID игры и Название -->
+            <div class="form-group-horizontal">
+                <div class="horizontal-item">
+                    <label for="gameId"><i class="fas fa-id-card"></i> ID игры:</label>
+                    <input type="text" id="gameId" placeholder="Например, lc" required>
+                </div>
+                <div class="horizontal-item">
+                    <label for="gameName"><i class="fas fa-heading"></i> Название:</label>
+                    <input type="text" id="gameName" required>
+                </div>
+            </div>
+            <!-- Горизонтальная группа: Версия и Постер -->
+            <div class="form-group-horizontal">
+                <div class="horizontal-item">
+                    <label for="gameVersion"><i class="fas fa-code-branch"></i> Версия:</label>
+                    <input type="text" id="gameVersion">
+                </div>
+                <div class="horizontal-item">
+                    <label for="gamePoster"><i class="fas fa-image"></i> Постер (имя файла):</label>
+                    <input type="text" id="gamePoster" required>
+                </div>
+            </div>
+            <!-- Разработчик и Теги в одной строке -->
+            <div class="form-group-horizontal">
+                <div class="horizontal-item">
+                    <label><i class="fas fa-user-tie"></i> Разработчик:</label>
+                    <div class="devs-dropdown">
+                        <button id="devsDropdownButton">Выберите разработчика <i class="fas fa-chevron-down"></i></button>
+                        <div id="devsDropdownMenu" class="dropdown-menu">
+                            <!-- Разработчики будут загружаться динамически -->
+                        </div>
+                    </div>
+                    <input type="hidden" id="gameDev" required>
+                </div>
+                <div class="horizontal-item">
+                    <label><i class="fas fa-tags"></i> Теги:</label>
+                    <div class="tags-dropdown">
+                        <button id="tagsDropdownButton">Выберите теги <i class="fas fa-chevron-down"></i></button>
+                        <div id="tagsDropdownMenu" class="dropdown-menu">
+                            <!-- Теги будут загружаться динамически -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gameDescription"><i class="fas fa-align-left"></i> Описание:</label>
+                <div class="editor-toolbar">
+                    <button onclick="formatText('bold', 'gameDescription')" title="Жирный"><i class="fas fa-bold"></i></button>
+                    <button onclick="formatText('italic', 'gameDescription')" title="Курсив"><i class="fas fa-italic"></i></button>
+                    <button onclick="formatText('underline', 'gameDescription')" title="Подчеркивание"><i class="fas fa-underline"></i></button>
+                    <button onclick="insertParagraph('gameDescription')" title="Новый абзац"><i class="fas fa-paragraph"></i></button>
+                </div>
+                <div id="gameDescription" contenteditable="true" class="editable-content"></div>
+                <input type="hidden" id="gameDescriptionRaw" required>
+            </div>
+            <!-- Горизонтальная группа: Ссылка на скачивание -->
+            <div class="form-group-horizontal">
+                <div class="horizontal-item">
+                    <label for="downloadLink"><i class="fas fa-link"></i> Ссылка на скачивание:</label>
+                    <input type="text" id="downloadLink" placeholder="https://example.com/download">
+                </div>
+            </div>
+            <!-- Чекбокс "Доступна для скачивания" на новой строке -->
+            <div class="form-group checkbox-group">
+                <label>
+                    <input type="checkbox" id="downloadable"> <i class="fas fa-download"></i> Доступна для скачивания
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="gameNotes"><i class="fas fa-sticky-note"></i> Примечания:</label>
+                <textarea id="gameNotes"></textarea>
+            </div>
+            <!-- Блок для трейлеров -->
+            <div class="form-group">
+                <label><i class="fas fa-film"></i> Трейлеры:</label>
+                <div id="trailersContainer">
+                    <!-- Здесь будут добавляться трейлеры -->
+                </div>
+                <button onclick="addTrailer()" class="small-btn"><i class="fas fa-plus"></i> Добавить трейлер</button>
+            </div>
+            <button onclick="saveGame()"><i class="fas fa-save"></i> Сохранить</button>
+            <button id="cancelEditBtn" onclick="cancelEdit()" style="display: none;"><i class="fas fa-times"></i> Отменить</button>
+        </div>
+        <!-- Правая колонка: JSON-вывод -->
+        <div class="final-json-container">
+            <div class="json-controls">
+                <h2><i class="fas fa-code"></i> Итоговый JSON</h2>
+                <button class="copy-btn" onclick="copyFinalJson()"><i class="far fa-copy"></i> Копировать</button>
+            </div>
+            <textarea id="finalJsonOutput" readonly>Загрузка данных...</textarea>
+        </div>
+    </div>
+
+    <!-- Редактор новостей -->
+    <div id="newsEditor" class="news-editor" style="display: none;">
+        <div class="main-container">
+            <!-- Левая колонка: Список и форма новостей -->
+            <div class="form-section">
+                <h2><i class="fas fa-newspaper"></i> Управление новостями</h2>
+                <div class="news-list" id="newsList"></div>
+                
+                <h3 id="newsFormTitle"><i class="fas fa-plus-circle"></i> Добавить новость</h3>
+                <div class="form-group">
+                    <label for="newsTitle"><i class="fas fa-heading"></i> Заголовок:</label>
+                    <input type="text" id="newsTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="newsText"><i class="fas fa-align-left"></i> Текст новости:</label>
+                    <div class="editor-toolbar">
+                        <button onclick="formatText('bold', 'newsText')" title="Жирный"><i class="fas fa-bold"></i></button>
+                        <button onclick="formatText('italic', 'newsText')" title="Курсив"><i class="fas fa-italic"></i></button>
+                        <button onclick="formatText('underline', 'newsText')" title="Подчеркивание"><i class="fas fa-underline"></i></button>
+                        <button onclick="insertParagraph('newsText')" title="Новый абзац"><i class="fas fa-paragraph"></i></button>
+                    </div>
+                    <div id="newsText" contenteditable="true" class="editable-content"></div>
+                    <input type="hidden" id="newsTextRaw" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-images"></i> Обложки (пути к изображениям):</label>
+                    <div id="coversContainer">
+                        <!-- Здесь будут добавляться обложки -->
+                    </div>
+                    <button onclick="addCover()" class="small-btn"><i class="fas fa-plus"></i> Добавить обложку</button>
+                </div>
+                <button onclick="saveNews()"><i class="fas fa-save"></i> Сохранить</button>
+                <button id="cancelNewsEditBtn" onclick="cancelNewsEdit()" style="display: none;"><i class="fas fa-times"></i> Отменить</button>
+            </div>
+            
+            <!-- Правая колонка: JSON новостей -->
+            <div class="final-json-container">
+                <div class="json-controls">
+                    <h2><i class="fas fa-code"></i> Итоговый JSON</h2>
+                    <button class="copy-btn" onclick="copyNewsJson()"><i class="far fa-copy"></i> Копировать</button>
+                </div>
+                <textarea id="newsJsonOutput" readonly>Загрузка данных...</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Редактор разработчиков -->
+    <div id="devsEditor" class="devs-editor" style="display: none;">
+        <div class="main-container">
+            <!-- Левая колонка: Список и форма разработчиков -->
+            <div class="form-section">
+                <h2><i class="fas fa-users"></i> Управление разработчиками</h2>
+                <div class="devs-list" id="devsList"></div>
+                
+                <h3 id="devsFormTitle"><i class="fas fa-plus-circle"></i> Добавить разработчика</h3>
+                <div class="form-group">
+                    <label for="devId"><i class="fas fa-id-card"></i> ID разработчика:</label>
+                    <input type="text" id="devId" placeholder="Например, ms" required>
+                </div>
+                <div class="form-group">
+                    <label for="devName"><i class="fas fa-heading"></i> Название:</label>
+                    <input type="text" id="devName" required>
+                </div>
+                <div class="form-group">
+                    <label for="devLogo"><i class="fas fa-image"></i> Логотип:</label>
+                    <input type="text" id="devLogo" required>
+                </div>
+                <div class="form-group">
+                    <label for="devBanner"><i class="fas fa-photo-film"></i> Баннер:</label>
+                    <input type="text" id="devBanner">
+                </div>
+                <div class="form-group">
+                    <label for="devDescription"><i class="fas fa-align-left"></i> Описание:</label>
+                    <div class="editor-toolbar">
+                        <button onclick="formatText('bold', 'devDescription')" title="Жирный"><i class="fas fa-bold"></i></button>
+                        <button onclick="formatText('italic', 'devDescription')" title="Курсив"><i class="fas fa-italic"></i></button>
+                        <button onclick="formatText('underline', 'devDescription')" title="Подчеркивание"><i class="fas fa-underline"></i></button>
+                        <button onclick="insertParagraph('devDescription')" title="Новый абзац"><i class="fas fa-paragraph"></i></button>
+                    </div>
+                    <div id="devDescription" contenteditable="true" class="editable-content"></div>
+                    <input type="hidden" id="devDescriptionRaw">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-link"></i> Контакты:</label>
+                    <div id="contactsContainer">
+                        <!-- Здесь будут добавляться контакты -->
+                    </div>
+                    <button onclick="addContact()" class="small-btn"><i class="fas fa-plus"></i> Добавить контакт</button>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-image"></i> Скриншоты:</label>
+                    <div id="screensContainer">
+                        <!-- Здесь будут добавляться скриншоты -->
+                    </div>
+                    <button onclick="addScreen()" class="small-btn"><i class="fas fa-plus"></i> Добавить скриншот</button>
+                </div>
+                <div class="form-group">
+                    <label for="devData"><i class="fas fa-calendar"></i> Год данных:</label>
+                    <input type="text" id="devData">
+                </div>
+                <div class="form-group">
+                    <label for="devBg"><i class="fas fa-palette"></i> Фон:</label>
+                    <select id="bgType" onchange="changeBgType()">
+                        <option value="color">Однотонный цвет</option>
+                        <option value="gradient">Градиент</option>
+                    </select>
+                    <div id="colorPicker" class="form-group color-picker-group">
+                        <div class="color-preview" id="colorPreview" style="background-color: #000000;"></div>
+                        <input type="color" id="devBgColor" value="#000000" onchange="updateBgPreview()">
+                        <input type="text" id="devBgColorText" value="#000000" onchange="updateBgColorFromText()">
+                    </div>
+                    <div id="gradientPicker" class="form-group" style="display: none;">
+                        <label>Направление градиента:</label>
+                        <input type="number" id="gradientAngle" min="0" max="360" value="180" onchange="updateBgPreview()">°
+                        <div class="gradient-stops" id="gradientStops">
+                            <!-- Остановки градиента будут добавляться здесь -->
+                        </div>
+                        <button onclick="addGradientStop()" class="small-btn"><i class="fas fa-plus"></i> Добавить цвет</button>
+                        <div id="gradientPreview" style="width: 100%; height: 50px; margin-top: 10px; border: 1px solid var(--border-color);"></div>
+                    </div>
+                </div>
+                <button onclick="saveDev()"><i class="fas fa-save"></i> Сохранить</button>
+                <button id="cancelDevEditBtn" onclick="cancelDevEdit()" style="display: none;"><i class="fas fa-times"></i> Отменить</button>
+            </div>
+            
+            <!-- Правая колонка: JSON разработчиков -->
+            <div class="final-json-container">
+                <div class="json-controls">
+                    <h2><i class="fas fa-code"></i> Итоговый JSON</h2>
+                    <button class="copy-btn" onclick="copyDevsJson()"><i class="far fa-copy"></i> Копировать</button>
+                </div>
+                <textarea id="devsJsonOutput" readonly>Загрузка данных...</textarea>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/editor.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

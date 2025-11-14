@@ -1,0 +1,34 @@
+<div id="video-player-container">
+  <div class="video-modal" id="video-modal">
+    <span class="modal-close" id="video-modal-close">&times;</span>
+    <button class="modal-nav prev-modal" id="prev-trailer" style="display: none;">&lt;</button>
+    <button class="modal-nav next-modal" id="next-trailer" style="display: none;">&gt;</button>
+
+    <div class="video-fullscreen-container" id="video-fullscreen-container">
+      
+      <div class="video-overlay-top">
+        <div class="video-info">
+          <h4 id="video-title" class="video-title">Название трейлера</h4>
+          <a id="game-page-link" href="#" class="game-cta-btn" target="_blank">На страницу игры</a>
+        </div>
+      </div>
+
+      <div class="video-container">
+        <video id="video-player" preload="metadata"></video>
+      </div>
+
+      <div class="video-controls">
+        <button id="play-pause-btn" class="control-btn"><i class="fas fa-play"></i></button>
+        <input type="range" id="progress-bar" class="progress-bar" value="0" step="0.01" min="0" max="1">
+        <div class="time-display">
+          <span id="current-time">00:00</span> / <span id="duration">00:00</span>
+        </div>
+        <div class="volume-group">
+          <button id="mute-btn" class="control-btn"><i class="fas fa-volume-up"></i></button>
+          <input type="range" id="volume-bar" class="volume-bar" value="1" min="0" max="1" step="0.01">
+        </div>
+        <button id="fullscreen-btn" class="control-btn"><i class="fas fa-expand"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
