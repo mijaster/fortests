@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let screenshots = [];
 
   try {
-    const response = await fetch('/json/devs.json');
+    const response = await fetch('json/devs.json');
     if (!response.ok) throw new Error(`Failed: ${response.status}`);
     const devs = await response.json();
     const dev = devs[devId];
