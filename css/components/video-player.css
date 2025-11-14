@@ -1,0 +1,445 @@
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.video-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  animation: fadeIn 0.3s ease;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.video-modal.active {
+  display: flex;
+}
+
+.video-fullscreen-container {
+  position: relative;
+  width: 1200px;
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.video-fullscreen-container:fullscreen,
+.video-fullscreen-container:-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-fullscreen-container:fullscreen .video-container,
+.video-fullscreen-container:-webkit-full-screen .video-container {
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.video-fullscreen-container:fullscreen .video-container video,
+.video-fullscreen-container:-webkit-full-screen .video-container video {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: fill !important;
+  border-radius: 0;
+}
+
+.video-overlay-top {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  margin-bottom: 16px;
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.video-overlay-top .video-info {
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(20, 20, 28, 0.95);
+}
+
+.video-title {
+  margin: 0;
+  font-family: 'DelaGothicOne', sans-serif;
+  font-size: 1.3em;
+  color: #fff;
+  letter-spacing: 1px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  word-spacing: 3px;
+}
+
+.game-cta-btn {
+  display: none;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #64c8ff;
+  background: rgba(100, 200, 255, 0.15);
+  border: 1px solid #64c8ff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  align-self: flex-start;
+}
+
+.game-cta-btn:hover {
+  background: #64c8ff;
+  color: #000;
+  transform: translateY(-1px);
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+.video-controls {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(20, 20, 28, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  opacity: 1;
+  visibility: visible;
+  z-index: 10001;
+  transition: opacity 0.3s ease;
+  pointer-events: auto;
+}
+
+.video-controls.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.video-fullscreen-container:fullscreen .video-controls,
+.video-fullscreen-container:-webkit-full-screen .video-controls {
+  position: fixed !important;
+  bottom: 40px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 90% !important;
+  max-width: 900px !important;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  font-size: 1.1em;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.control-btn:hover {
+  color: var(--text-secondary);
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 20px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.progress-bar::-webkit-slider-thumb:hover {
+  background: var(--text-secondary);
+  transform: scale(1.2);
+}
+
+.time-display {
+  font-size: 0.9em;
+  color: #ddd;
+  white-space: nowrap;
+  margin: 0 8px;
+}
+
+.volume-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-bar {
+  width: 70px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.volume-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 20px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 48px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  z-index: 1001;
+}
+
+.modal-close:hover {
+  opacity: 1;
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  z-index: 1001;
+  transition: background 0.3s ease;
+}
+
+.modal-nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.prev-modal { left: 20px; }
+.next-modal { right: 20px; }
+
+.video-fullscreen-container:fullscreen,
+.video-fullscreen-container:-webkit-full-screen {
+  cursor: default;
+}
+
+.video-fullscreen-container:fullscreen.hide-cursor,
+.video-fullscreen-container:-webkit-full-screen.hide-cursor {
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  .video-fullscreen-container {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+  .video-container {
+    padding-bottom: 56.25%;
+    border-radius: 0;
+    border: none;
+  }
+
+  .video-controls {
+    width: 96%;
+    max-width: none;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+    bottom: 10px;
+  }
+
+  .control-btn {
+    font-size: 1.3em;
+  }
+
+  .time-display {
+    font-size: 0.85em;
+    margin: 0 6px;
+  }
+
+  .volume-group {
+    gap: 6px;
+    display: none;
+  }
+
+  .volume-bar {
+    width: 60px;
+  }
+
+  .progress-bar::-webkit-slider-thumb,
+  .volume-bar::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+  }
+
+  .video-overlay-top .video-info {
+    padding: 10px;
+    border-radius: 8px;
+    gap: 4px;
+  }
+
+  .video-title {
+    font-size: 1.15em;
+    word-spacing: 2px;
+  }
+
+  .game-cta-btn {
+    font-size: 0.85em;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    font-size: 32px;
+    opacity: 0.9;
+  }
+
+  .modal-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .prev-modal {
+    left: 12px;
+  }
+
+  .next-modal {
+    right: 12px;
+  }
+
+  .modal-nav {
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .video-modal:hover .modal-nav,
+  .video-modal:active .modal-nav {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  .video-controls {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+
+  .video-controls.hide {
+    opacity: 0;
+  }
+
+  .video-fullscreen-container:fullscreen .video-controls,
+  .video-fullscreen-container:-webkit-full-screen .video-controls {
+    bottom: 20px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 768px) {
+  .video-fullscreen-container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .video-controls {
+    bottom: 15px;
+    padding: 12px;
+  }
+
+  .video-overlay-top {
+    top: 10px;
+    left: 10px;
+    width: auto;
+    max-width: 70%;
+  }
+}
