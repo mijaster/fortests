@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let screenshots = [];
 
   try {
-    const response = await fetch('/json/games.json');
+    const response = await fetch('json/games.json');
     if (!response.ok) {
       throw new Error(`Не удалось загрузить games.json: ${response.status}`);
     }
