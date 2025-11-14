@@ -1,0 +1,70 @@
+{
+    "lc": {
+        "name": "Lethal Company",
+        "status": "демо",
+        "statusColor": "",
+        "dev": [
+            "ms"
+        ],
+        "version": "1.12.2 Forge",
+        "description": "Станьте частью команды, которая работает на Компанию, собирая ценные ресурсы на уже давно заброшенных планетах — звучит как простая работа, не так ли? Но каждый вылет превращается в настоящий кошмар: вам встречаются неизвестные Компании объекты: ловушки и звуки, а может быть и что-то ещё... Работайте вместе, и помните: ошибка может стоить не только контракта, но и жизни. Игра сделана по мотивам оригинальной игры Lethal Company от Zeekers.",
+        "poster": "animation.mp4",
+        "downloadable": false,
+        "link": "#",
+        "visible": false,
+        "tags": [
+            "coop",
+            "horror",
+            "single",
+            "comedy"
+        ],
+        "indexPage": {
+            "backgroundPath": "assets/pages/games/lc/screens/6.png",
+            "backgroundOpacity": 0.4,
+            "backgroundContrast": 1,
+            "backgroundBrightness": 1,
+            "backgroundBlur": 0
+        }
+    },
+    "die": {
+        "name": "D.I.E.",
+        "status": "rework",
+        "dev": [
+            "ms",
+            "cube"
+        ],
+        "version": "1.12.2 Forge",
+        "realiseDate": "01.01.2026",
+        "realiseTime": "12:00",
+        "description": "Погрузитесь в лабораторию, полную хаоса. Вы играете за учёных, столкнувшихся с последствиями опасного Эксперимента, вышедшего из-под контроля.<br>Ваша задача — выжить, выполняя все действия для вашего выживания. Ищите детали и предметы, чтобы в открыть путь к спасению. Выполняя задания и играя в мини-игры, получайте ценные монеты, необходимые вам в игре.<br>Сможете ли вы починить лифт и сбежать из объекта? Время узнать это!",
+        "poster": "poster.png",
+        "downloadable": false,
+        "link": "#",
+        "visible": true,
+        "tags": [
+            "coop",
+            "horror",
+            "single",
+            "comedy"
+        ],
+        "screenshots": ["1.png", "2.png", "3.png"],
+        "trailersPage": [
+            {
+                "file": "main.mp4",
+                "preview": "main.png",
+                "name": "D.I.E. : rework - главный трейлер",
+                "addToSinglePage": true
+            }
+        ],
+        "indexPage": {
+            "hideDescription": true,
+            "description": "",
+            "hideTags": true,
+            "backgroundPath": "assets/pages/games/die/screens/4.png",
+            "backgroundOpacity": 0.8,
+            "backgroundContrast": 1,
+            "backgroundBrightness": 1,
+            "backgroundBlur": 0
+        }
+    }
+}

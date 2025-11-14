@@ -1,0 +1,12 @@
+{
+    "news": [
+        {
+            "date": "07-09-2025",
+            "title": "Выход D.I.E. : rework",
+            "text": "",
+            "covers": [
+                "assets/pages/news/test_cover.jpg"
+            ]
+        }
+    ]
+}
