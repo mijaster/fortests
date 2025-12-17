@@ -123,6 +123,7 @@ header {
     transform: translateX(-70px);
     background-color: var(--bg-color);
     border-radius: var(--border-radius-sm);
+    border: 1px solid #383838;
     padding: 15px 0;
     margin-top: 5px;
     min-width: 200px;

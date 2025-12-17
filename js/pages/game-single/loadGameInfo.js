@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameInfoContainer.insertBefore(releaseEl, rightPart);
     }
   }
+  
 
   fetch('json/games.json')
     .then(res => {

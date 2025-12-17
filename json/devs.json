@@ -32,5 +32,11 @@
             "3.png"
         ],
         "bg": "linear-gradient(180deg, #0088ff 0%, #ff0000 100%)"
+    },
+    "nojoke0": {
+        "name": "nojoke0",
+        "contacts": [
+            "https://t.me/nojokeins"
+        ]
     }
 }

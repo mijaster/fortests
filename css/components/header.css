@@ -1,5 +1,3 @@
-/* ============= HEADER ============= */
-
 header {
     position: fixed;
     top: 0;
@@ -39,8 +37,6 @@ header.scrolled {
 header.scrolled .logo {
     height: 1.9cap;
 }
-
-/* ============= NAVIGATION ============= */
 
 .nav-menu {
     display: flex;
@@ -101,8 +97,6 @@ header.scrolled .nav-links li a {
     font-size: 19px;
 }
 
-/* ============= SOCIAL ICONS ============= */
-
 .social-icons {
     display: flex;
     gap: 20px;
@@ -123,8 +117,6 @@ header.scrolled .social-icons a {
     opacity: 1;
     transform: scale(1);
 }
-
-/* ============= BURGER MENU ============= */
 
 .burger-menu {
     display: none;
@@ -148,7 +140,6 @@ header.scrolled .social-icons a {
     transition: all 0.3s ease;
 }
 
-/* Анимация бургера при активации */
 .burger-icon.active span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -160,8 +151,6 @@ header.scrolled .social-icons a {
 .burger-icon.active span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
 }
-
-/* ============= АДАПТИВ: до 992px ============= */
 
 @media (max-width: 992px) {
     .burger-menu {

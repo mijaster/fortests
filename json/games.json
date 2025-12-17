@@ -4,14 +4,16 @@
         "status": "демо",
         "statusColor": "",
         "dev": [
-            "ms"
+            "ms",
+            "nojoke0",
+            "cube"
         ],
         "version": "1.12.2 Forge",
         "description": "Станьте частью команды, которая работает на Компанию, собирая ценные ресурсы на уже давно заброшенных планетах — звучит как простая работа, не так ли? Но каждый вылет превращается в настоящий кошмар: вам встречаются неизвестные Компании объекты: ловушки и звуки, а может быть и что-то ещё... Работайте вместе, и помните: ошибка может стоить не только контракта, но и жизни. Игра сделана по мотивам оригинальной игры Lethal Company от Zeekers.",
         "poster": "animation.mp4",
         "downloadable": false,
         "link": "#",
-        "visible": false,
+        "visible": true,
         "tags": [
             "coop",
             "horror",
@@ -48,6 +50,22 @@
             "comedy"
         ],
         "screenshots": ["1.png", "2.png", "3.png"],
+        "music": [
+            {
+                "name": "Музыка из D.I.E. : rework",
+                "cover": "cover.png",
+                "files": [
+                    {
+                        "file": "1.mp3",
+                        "name": "Eskimo - Kondensat"
+                    },
+                    {
+                        "file": "2.mp3",
+                        "name": "houp - Life"
+                    }
+                ]
+            }
+        ],
         "trailersPage": [
             {
                 "file": "main.mp4",
@@ -60,7 +78,7 @@
             "hideDescription": true,
             "description": "",
             "hideTags": true,
-            "backgroundPath": "assets/pages/games/die/screens/4.png",
+            "backgroundPath": "assets/pages/games/die/background.png",
             "backgroundOpacity": 0.8,
             "backgroundContrast": 1,
             "backgroundBrightness": 1,

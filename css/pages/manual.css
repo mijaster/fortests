@@ -1,0 +1,120 @@
+.manual-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.manual-container {
+  width: 100%;
+  max-width: 800px;
+  background: rgba(20, 20, 28, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.current-instruction {
+    font-family: 'DelaGothicOne', sans-serif;
+  font-size: 28px;
+  line-height: 1.8;
+  text-align: center;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-container {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.progress-text {
+  display: block;
+  font-size: 16px;
+  color: #aaa;
+}
+
+.progress-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 20px auto;
+  width: 100%;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4e54c8, #8f94fb);
+  width: 0;
+  transition: width 0.4s ease;
+  border-radius: 4px;
+}
+
+.manual-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.btn {
+    width: 100%;
+    justify-content: center;
+}
+
+#prev-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+#prev-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#prev-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#next-btn {
+  background: #4e54c8;
+  color: #fff;
+}
+
+#next-btn:hover {
+  background: #4349b0;
+}
+
+.nav-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .manual-container {
+    padding: 30px 20px;
+  }
+
+  .manual-header h1 {
+    font-size: 28px;
+  }
+
+  .current-instruction {
+    font-size: 18px;
+    padding: 20px;
+  }
+
+  .nav-btn {
+    font-size: 15px;
+    padding: 12px 16px;
+  }
+}
