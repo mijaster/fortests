@@ -731,6 +731,166 @@
   transition: all 0.2s ease;
 }
 
+.mini-player {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 370px;
+  background: rgba(134, 134, 134, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mini-player.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mini-player-cover {
+  width: 95px;
+  height: 95px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mini-player-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mini-player-info {
+  flex: 1;
+  overflow: hidden;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-left: 10px;
+}
+
+.mini-player-track-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 4px 0;
+  font-weight: 500;
+}
+
+.mini-player-time-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.mini-player-time-row .current,
+.mini-player-time-row .duration {
+  flex: none;
+  min-width: 30px;
+  text-align: center;
+}
+
+.mini-player-seek {
+  flex: 1;
+  height: 4px;
+  width: 10px;
+  background: #444;
+  border-radius: 2px;
+  appearance: none;
+  cursor: pointer;
+  margin: 0 6px;
+}
+
+.mini-player-seek::-webkit-slider-thumb {
+  appearance: none;
+  width: 8px;
+  height: 12px;
+  background: #fff;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.mini-player-seek::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.mini-player-seek::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s;
+}
+
+.mini-player-seek::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.mini-player-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mini-player-play {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.mini-player-play:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.mini-player-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0.4;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.mini-player-close:hover {
+  opacity: 1;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -1095,5 +1255,75 @@
 
   .playlist-tracks.open {
     padding: 12px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mini-player {
+    left: 50%;
+    top: auto;
+    bottom: 10px;
+    transform: translateX(-50%) translateY(0);
+    width: 90%;
+    max-width: 360px;
+    padding-right: 8px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .mini-player.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .mini-player-cover {
+    width: 65px;
+    height: 65px;
+    border-radius: 8px;
+  }
+
+  .mini-player-info {
+    margin-left: 8px;
+    font-size: 0.85rem;
+  }
+
+  .mini-player-track-name {
+    font-size: 0.9rem;
+  }
+
+  .mini-player-time-row {
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+
+  .mini-player-seek {
+    height: 3px;
+    margin: 0 4px;
+  }
+
+  .mini-player-seek::-webkit-slider-thumb {
+    width: 6px;
+    height: 10px;
+  }
+
+  .mini-player-seek::-moz-range-thumb {
+    width: 6px;
+    height: 6px;
+  }
+
+  .mini-player-controls {
+    margin-top: 20px;
+    gap: 6px;
+  }
+
+  .mini-player-play {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+
+  .mini-player-close {
+    width: 18px;
+    height: 18px;
+    font-size: 22px;
   }
 }

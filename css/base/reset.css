@@ -68,3 +68,14 @@ iframe {
     border: 0;
 }
 
+button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+button:active,
+button:focus {
+  outline: none;
+}

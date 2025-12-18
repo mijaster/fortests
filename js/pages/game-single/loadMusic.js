@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const container = section.querySelector('#music-playlists-container');
     let currentAudio = new Audio();
     let currentTrackElement = null;
+    let currentPlaylistCover = '';
     let isSeeking = false;
 
     const formatTime = (seconds) => {
@@ -30,6 +31,68 @@ document.addEventListener('DOMContentLoaded', async () => {
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    const miniPlayer = document.createElement('div');
+    miniPlayer.id = 'mini-player';
+    miniPlayer.className = 'mini-player no-select';
+    miniPlayer.innerHTML = `
+        <button class="mini-player-close" id="mini-player-close">×</button>
+        <div class="mini-player-cover">
+            <img src="" alt="Обложка трека">
+        </div>
+        <div class="mini-player-info">
+            <p class="mini-player-track-name">Трек</p>
+            <div class="mini-player-time-row">
+                <span class="current">0:00</span>
+                <input type="range" class="mini-player-seek" value="0" min="0" max="100" step="0.1">
+                <span class="duration">0:00</span>
+            </div>
+        </div>
+        <div class="mini-player-controls">
+            <button class="mini-player-play" id="mini-player-play">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+        </div>
+    `;
+    document.body.appendChild(miniPlayer);
+
+    const miniPlayerPlay = document.getElementById('mini-player-play');
+    const miniPlayerSeek = miniPlayer.querySelector('.mini-player-seek');
+    const miniPlayerCurrentTime = miniPlayer.querySelector('.mini-player-time-row .current');
+    const miniPlayerDurationTime = miniPlayer.querySelector('.mini-player-time-row .duration');
+    const miniPlayerTrackName = miniPlayer.querySelector('.mini-player-track-name');
+    const miniPlayerCover = miniPlayer.querySelector('.mini-player-cover img');
+    const miniPlayerClose = document.getElementById('mini-player-close');
+
+    const updateMiniPlayer = () => {
+        if (!currentAudio.duration) return;
+        const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+        miniPlayerSeek.value = isNaN(progress) ? 0 : progress;
+        miniPlayerCurrentTime.textContent = formatTime(currentAudio.currentTime);
+        miniPlayerDurationTime.textContent = formatTime(currentAudio.duration);
+    };
+
+    const showMiniPlayer = () => {
+        if (!currentTrackElement) return;
+        const rect = currentTrackElement.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        if (!isVisible) {
+            miniPlayer.classList.add('show');
+        }
+    };
+
+    const hideMiniPlayer = () => {
+        miniPlayer.classList.remove('show');
+    };
+
+    const toggleMiniPlayerPlay = () => {
+        const icon = miniPlayerPlay.querySelector('i');
+        if (currentAudio.paused) {
+            icon.className = 'fa-solid fa-play';
+        } else {
+            icon.className = 'fa-solid fa-pause';
+        }
     };
 
     const playTrack = (trackEl, fileSrc, duration) => {
@@ -48,6 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (time) time.style.display = 'none';
                 trackEl.classList.remove('playing');
                 currentTrackElement = null;
+                hideMiniPlayer();
             } else {
                 currentAudio.play().catch(() => {});
                 trackEl.querySelector('.track-play-btn i').className = 'fa-solid fa-pause';
@@ -56,8 +120,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (seek) seek.style.display = 'block';
                 if (time) time.style.display = 'inline';
                 trackEl.classList.add('playing');
-                currentTrackElement = trackEl;
+                showMiniPlayer();
             }
+            toggleMiniPlayerPlay();
             return;
         }
 
@@ -92,8 +157,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const value = (currentAudio.currentTime / currentAudio.duration) * 100;
             seekBar.value = value;
             currentTimeEl.textContent = formatTime(currentAudio.currentTime);
+            updateMiniPlayer();
         };
 
+        currentAudio.removeEventListener('timeupdate', updateProgress);
         currentAudio.addEventListener('timeupdate', updateProgress);
 
         currentAudio.addEventListener('ended', () => {
@@ -103,11 +170,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (currentTimeEl) currentTimeEl.style.display = 'none';
             trackEl.classList.remove('playing');
             currentTrackElement = null;
+            hideMiniPlayer();
         });
 
         currentAudio.play().catch(() => {});
 
         currentTrackElement = trackEl;
+        const playlistItem = trackEl.closest('.music-playlist-item');
+        currentPlaylistCover = playlistItem?.querySelector('.playlist-thumb img')?.src || '';
+        miniPlayerCover.src = currentPlaylistCover;
+        miniPlayerTrackName.textContent = trackEl.querySelector('.track-name').textContent;
+
+        miniPlayerDurationTime.textContent = formatTime(duration);
+
+        showMiniPlayer();
+        toggleMiniPlayerPlay();
     };
 
     const getDuration = async (src) => {
@@ -250,6 +327,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (prevTime) prevTime.style.display = 'none';
                     currentTrackElement.classList.remove('playing');
                     currentTrackElement = null;
+                    hideMiniPlayer();
                 }
             } else {
                 if (!tracks.dataset.loaded) {
@@ -273,4 +351,64 @@ document.addEventListener('DOMContentLoaded', async () => {
             }, { once: true });
         });
     }
+
+    miniPlayerPlay.addEventListener('click', () => {
+        if (currentAudio.paused) {
+            currentAudio.play().catch(() => {});
+        } else {
+            currentAudio.pause();
+        }
+        toggleMiniPlayerPlay();
+    });
+
+    miniPlayerSeek.addEventListener('pointerdown', () => {
+        isSeeking = true;
+    });
+
+    miniPlayerSeek.addEventListener('pointerup', () => {
+        isSeeking = false;
+        const time = (miniPlayerSeek.value / 100) * currentAudio.duration;
+        currentAudio.currentTime = time;
+    });
+
+    miniPlayerSeek.addEventListener('input', () => {
+        if (isSeeking && currentAudio.duration) {
+            const time = (miniPlayerSeek.value / 100) * currentAudio.duration;
+            currentAudio.currentTime = time;
+        }
+    });
+
+    miniPlayerClose.addEventListener('click', () => {
+        if (currentTrackElement) {
+            currentAudio.pause();
+            const btn = currentTrackElement.querySelector('.track-play-btn i');
+            const seek = currentTrackElement.querySelector('.track-seek-inline');
+            const time = currentTrackElement.querySelector('.track-current-time');
+            if (btn) btn.className = 'fa-solid fa-play';
+            if (seek) seek.style.display = 'none';
+            if (time) time.style.display = 'none';
+            currentTrackElement.classList.remove('playing');
+            currentTrackElement = null;
+        }
+        hideMiniPlayer();
+    });
+
+    const checkTrackVisibility = () => {
+        if (!currentTrackElement) return;
+        const rect = currentTrackElement.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        if (isVisible) {
+            hideMiniPlayer();
+        } else {
+            showMiniPlayer();
+        }
+    };
+
+    currentAudio.addEventListener('timeupdate', () => {
+        updateMiniPlayer();
+        checkTrackVisibility();
+    });
+
+    window.addEventListener('scroll', checkTrackVisibility, { passive: true });
+    window.addEventListener('resize', checkTrackVisibility);
 });
