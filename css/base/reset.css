@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+* {
+  -webkit-tap-highlight-color: transparent;
+}
 
 body {
     line-height: 1.5;
@@ -68,14 +71,3 @@ iframe {
     border: 0;
 }
 
-button {
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
-  border: none;
-  background: none;
-}
-
-button:active,
-button:focus {
-  outline: none;
-}
