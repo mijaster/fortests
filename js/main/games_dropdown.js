@@ -12,7 +12,6 @@ async function initGamesDropdown() {
 
             Object.entries(gamesConfig).forEach(([gameId, gameData]) => {
                 const gameItem = document.createElement('a');
-
                 if (!gameData.visible) {
                     gameItem.style.display = 'none';
                 }
@@ -26,22 +25,51 @@ async function initGamesDropdown() {
             });
 
             dropdown.appendChild(gamesList);
-            const gamesLink = document.querySelector('.has-dropdown > a');
+        }
 
-            if (gamesLink) {
-                gamesLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    dropdown.classList.toggle('active');
-                });
+        const gamesLink = document.querySelector('.has-dropdown > a');
+        const hasDropdown = document.querySelector('.has-dropdown');
 
-                document.addEventListener('click', (e) => {
-                    if (!dropdown.contains(e.target) && !gamesLink.contains(e.target)) {
-                        dropdown.classList.remove('active');
-                    }
-                });
+        function handleDropdown() {
+            const isMobile = window.innerWidth <= 992;
+
+            if (isMobile) {
+                // Mobile: клик разрешён
+                gamesLink.removeEventListener('click', preventClick);
+                gamesLink.addEventListener('click', handleMobileClick);
+                hasDropdown.classList.remove('hover');
+            } else {
+                // Desktop: клик запрещён, только hover
+                gamesLink.removeEventListener('click', handleMobileClick);
+                gamesLink.addEventListener('click', preventClick);
+                setupHoverEffect();
             }
         }
+
+        function preventClick(e) {
+            e.preventDefault();
+        }
+
+        function handleMobileClick(e) {
+            e.preventDefault();
+            hasDropdown.classList.toggle('active');
+        }
+
+        function setupHoverEffect() {
+            hasDropdown.addEventListener('mouseenter', () => {
+                hasDropdown.classList.add('hover');
+            });
+            hasDropdown.addEventListener('mouseleave', () => {
+                hasDropdown.classList.remove('hover');
+            });
+        }
+
+        // Инициализация
+        handleDropdown();
+        window.addEventListener('resize', handleDropdown);
     } catch (error) {
         console.error('Error loading games config:', error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', initGamesDropdown);

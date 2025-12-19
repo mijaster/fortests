@@ -17,10 +17,11 @@ class VideoPlayer {
     this.prevTrailerBtn = document.getElementById('prev-trailer');
     this.nextTrailerBtn = document.getElementById('next-trailer');
     this.fullscreenContainer = document.getElementById('video-fullscreen-container');
+    this.mobilePlayOverlay = document.getElementById('mobile-play-overlay');
+    this.rotateHint = document.getElementById('rotate-hint-overlay');
 
     this.hideControlsTimeout = null;
 
-    // Если элементы не найдены сразу — ждём
     if (!this.modal || !this.video) {
       this.waitForElements();
       return;
@@ -48,6 +49,8 @@ class VideoPlayer {
       this.prevTrailerBtn = document.getElementById('prev-trailer');
       this.nextTrailerBtn = document.getElementById('next-trailer');
       this.fullscreenContainer = document.getElementById('video-fullscreen-container');
+      this.mobilePlayOverlay = document.getElementById('mobile-play-overlay');
+      this.rotateHint = document.getElementById('rotate-hint-overlay');
 
       if (this.modal && this.video && this.fullscreenContainer) {
         observer.disconnect();
@@ -58,13 +61,11 @@ class VideoPlayer {
   }
 
   initEvents() {
-    // Закрытие по крестику или клику вне видео
     this.closeBtn.addEventListener('click', () => this.close());
     this.modal.addEventListener('click', (e) => {
       if (e.target === this.modal) this.close();
     });
 
-    // Управление воспроизведением
     this.video.addEventListener('click', () => this.togglePlay());
     this.playPauseBtn.addEventListener('click', () => this.togglePlay());
 
@@ -77,7 +78,6 @@ class VideoPlayer {
       this.playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     });
 
-    // Обновление прогресса
     this.video.addEventListener('timeupdate', () => {
       const value = (this.video.currentTime / this.video.duration) || 0;
       this.progressBar.value = value;
@@ -88,12 +88,10 @@ class VideoPlayer {
       this.durationEl.textContent = this.formatTime(this.video.duration);
     });
 
-    // Перемотка
     this.progressBar.addEventListener('input', () => {
       this.video.currentTime = this.video.duration * this.progressBar.value;
     });
 
-    // Мут и громкость
     this.muteBtn.addEventListener('click', () => {
       this.video.muted = !this.video.muted;
       this.updateMuteIcon();
@@ -105,23 +103,31 @@ class VideoPlayer {
       this.updateMuteIcon();
     });
 
-    // Полноэкранный режим
     this.fullscreenBtn.addEventListener('click', () => {
       this.toggleFullscreen();
     });
 
-    // Показываем контролы при движении мыши
     document.addEventListener('mousemove', () => this.handleMouseMove());
+    document.addEventListener('touchstart', () => this.handleMouseMove(), { passive: true });
+    document.addEventListener('touchmove', () => this.handleMouseMove(), { passive: true });
     document.addEventListener('keydown', () => this.showControls());
 
-    // Слежение за полноэкранным режимом
     document.addEventListener('fullscreenchange', () => this.onFullscreenChange());
     document.addEventListener('webkitfullscreenchange', () => this.onFullscreenChange());
 
-    // Инициализация
+    window.addEventListener('orientationchange', () => this.handleOrientation());
+    window.addEventListener('resize', () => this.handleOrientation());
+
     this.updateMuteIcon();
     this.volumeBar.value = 0.8;
     this.video.volume = 0.8;
+
+    if (this.mobilePlayOverlay) {
+      this.mobilePlayOverlay.addEventListener('click', () => {
+        this.video.play().catch(() => {});
+        this.mobilePlayOverlay.style.display = 'none';
+      });
+    }
   }
 
   updateMuteIcon() {
@@ -136,18 +142,15 @@ class VideoPlayer {
   showControls() {
     const isFullscreen = this.isFullscreen();
 
-    // Скрываем название и кнопку в полноэкранном режиме
     if (isFullscreen) {
       this.overlayTop.style.display = 'none';
     } else {
       this.overlayTop.style.display = '';
     }
 
-    // Показываем панель управления
     this.controls.classList.remove('hidden');
     this.fullscreenContainer.classList.remove('hide-cursor');
 
-    // Скрываем через 2 секунды, если видео не на паузе
     this.clearHideTimeout();
     this.hideControlsTimeout = setTimeout(() => {
       if (!this.video.paused) {
@@ -184,21 +187,47 @@ class VideoPlayer {
 
     if (!isFullscreen) {
       if (this.fullscreenContainer.requestFullscreen) {
-        this.fullscreenContainer.requestFullscreen();
+        this.fullscreenContainer.requestFullscreen()
+          .then(() => this.enterLandscape())
+          .catch(e => {
+            console.warn("Fullscreen failed:", e);
+            this.handleMobileFullscreenFallback(true);
+            this.handleOrientation();
+          });
       } else if (this.fullscreenContainer.webkitRequestFullscreen) {
         this.fullscreenContainer.webkitRequestFullscreen();
+        this.enterLandscape();
+      } else {
+        this.handleMobileFullscreenFallback(true);
+        this.handleOrientation();
       }
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen();
       } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
+      } else {
+        this.handleMobileFullscreenFallback(false);
       }
+      this.exitLandscape();
     }
   }
 
   isFullscreen() {
-    return !!document.fullscreenElement || !!document.webkitFullscreenElement;
+    return !!document.fullscreenElement ||
+           !!document.webkitFullscreenElement ||
+           this.fullscreenContainer.classList.contains('mobile-fullscreen');
+  }
+
+  handleMobileFullscreenFallback(enable) {
+    if (enable) {
+      this.fullscreenContainer.classList.add('mobile-fullscreen');
+      document.body.style.overflow = 'hidden';
+    } else {
+      this.fullscreenContainer.classList.remove('mobile-fullscreen');
+      document.body.style.overflow = '';
+    }
+    this.onFullscreenChange();
   }
 
   onFullscreenChange() {
@@ -213,64 +242,97 @@ class VideoPlayer {
     }
 
     this.showControls();
+    this.handleOrientation();
+  }
+
+  enterLandscape() {
+    if ('orientation' in screen) {
+      screen.orientation.lock('landscape').catch(() => {
+        this.handleOrientation();
+      });
+    } else {
+      this.handleOrientation();
+    }
+  }
+
+  exitLandscape() {
+    if ('orientation' in screen) {
+      screen.orientation.unlock();
+    }
+    this.hideRotateHint();
+  }
+
+  handleOrientation() {
+    const isMobile = window.innerWidth <= 768;
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    if (isMobile && this.modal.classList.contains('active')) {
+      if (isPortrait && !this.isFullscreen()) {
+        this.showRotateHint();
+      } else {
+        this.hideRotateHint();
+      }
+    } else {
+      this.hideRotateHint();
+    }
+  }
+
+  showRotateHint() {
+    if (this.rotateHint) {
+      this.rotateHint.style.display = 'flex';
+    }
+  }
+
+  hideRotateHint() {
+    if (this.rotateHint) {
+      this.rotateHint.style.display = 'none';
+    }
   }
 
   play(src, poster = '', title = 'Видео', gameId = null, showNav = false) {
-    // Устанавливаем источник и постер
     this.video.src = src;
     this.video.poster = poster;
     this.titleElement.textContent = title;
 
-    // Показываем кнопку "На страницу игры", если нужно
     const isOnGameSingle = window.location.pathname.includes('game-single.html');
     this.gamePageLink.style.display = gameId && !isOnGameSingle ? 'inline-block' : 'none';
     if (gameId && !isOnGameSingle) {
       this.gamePageLink.href = `game-single.html?id=${gameId}`;
     }
 
-    // Кнопки навигации
     this.prevTrailerBtn.style.display = showNav ? 'flex' : 'none';
     this.nextTrailerBtn.style.display = showNav ? 'flex' : 'none';
 
-    // Загружаем видео
-    this.video.load();
     this.modal.classList.add('active');
+    this.video.load();
 
-    // Сбрасываем прогресс
     this.video.onloadedmetadata = () => {
       this.durationEl.textContent = this.formatTime(this.video.duration);
+      this.progressBar.value = 0;
+      this.currentTimeEl.textContent = '00:00';
     };
 
-    this.progressBar.value = 0;
-    this.currentTimeEl.textContent = '00:00';
     this.playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-
-    // Показываем верхнюю панель (в обычном режиме)
     this.overlayTop.style.display = '';
-
-    // Показываем контролы
     this.showControls();
+    this.handleOrientation();
   }
 
   close() {
-    // Выходим из полноэкранного режима
     if (document.exitFullscreen) document.exitFullscreen();
     if (document.webkitExitFullscreen) document.webkitExitFullscreen();
 
-    // Останавливаем видео
+    this.handleMobileFullscreenFallback(false);
+    this.exitLandscape();
+
     this.video.pause();
     this.video.currentTime = 0;
     this.modal.classList.remove('active');
-
-    // Сбрасываем таймер
     this.clearHideTimeout();
-
-    // Очищаем источник (чтобы не грузилось в фоне)
     this.video.src = '';
   }
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
   window.videoPlayer = new VideoPlayer();
 });

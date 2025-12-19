@@ -35,6 +35,13 @@
     },
     "nojoke0": {
         "name": "nojoke0",
+        "logo": "logo.jpg",
+        "banner": "banner.png",
+        "screens": [
+            "1.png",
+            "2.png",
+            "3.png"
+        ],
         "contacts": [
             "https://t.me/nojokeins"
         ]

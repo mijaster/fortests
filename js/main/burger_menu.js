@@ -1,9 +1,9 @@
-// js/main/burger_menu.js
 function initBurgerMenu() {
     const burgerMenu = document.querySelector('.burger-menu');
     const navMenu = document.querySelector('.nav-menu');
     const burgerIcon = document.querySelector('.burger-icon');
     const navLinks = document.querySelectorAll('.nav-links a');
+    const gamesDropdownLink = document.querySelector('.has-dropdown > a');
 
     if (burgerMenu && navMenu) {
         burgerMenu.addEventListener('click', () => {
@@ -13,7 +13,14 @@ function initBurgerMenu() {
         });
 
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                if (link === gamesDropdownLink) {
+                    e.preventDefault();
+                    const hasDropdown = document.querySelector('.has-dropdown');
+                    hasDropdown.classList.toggle('active');
+                    return;
+                }
+
                 navMenu.classList.remove('active');
                 burgerIcon.classList.remove('active');
                 document.body.classList.remove('no-scroll');
@@ -38,3 +45,5 @@ function initBurgerMenu() {
         });
     }
 }
+
+document.addEventListener('DOMContentLoaded', initBurgerMenu);

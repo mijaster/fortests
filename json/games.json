@@ -26,7 +26,28 @@
             "backgroundContrast": 1,
             "backgroundBrightness": 1,
             "backgroundBlur": 0
-        }
+        },
+        "screenshots": ["2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png"],
+        "music": [
+            {
+                "name": "Lethal Company OST",
+                "cover": "cover.png",
+                "files": [
+                    {
+                        "file": "1.mp3",
+                        "name": "Eskimo - Kondensat"
+                    },
+                    {
+                        "file": "2.mp3",
+                        "name": "houp - Backrooms"
+                    },
+                    {
+                        "file": "3.mp3",
+                        "name": "rofoshristo - Chilblain"
+                    }
+                ]
+            }
+        ]
     },
     "die": {
         "name": "D.I.E.",
