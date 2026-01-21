@@ -1,12 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        const [gamesResponse, tagsResponse] = await Promise.all([
-            fetch('json/games.json'),
-            fetch('json/tags.json')
-        ]);
-        
-        const gamesConfig = await gamesResponse.json();
-        const tagsConfig = await tagsResponse.json();
+        const response = await fetch('json/games.json');
+        const gamesData = await response.json();
         
         const currentPage = window.location.pathname.split('/').pop();
         const urlParams = new URLSearchParams(window.location.search);
@@ -15,10 +10,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         const isDevPage = currentPage === 'dev-single.html';
         const showOnlyCollabWithMs = isDevPage && devId !== 'ms';
 
-        const validGames = Object.entries(gamesConfig)
+        const projects = gamesData.projects;
+        const tagsList = gamesData.tags;
+
+        const now = Date.now();
+
+        const validGames = Object.entries(projects)
             .filter(([id, game]) => game.indexPage?.backgroundPath)
             .map(([id, game]) => ({ id, ...game }))
             .filter(game => {
+                const revealDate = parseAsMskTime(game.revealDate);
+                if (isNaN(revealDate)) return false;
+                const isReleased = revealDate <= now;
+                
+                if (!isReleased && !game.id.startsWith('_secret')) {
+                    return false;
+                }
+
                 if (isDevPage) {
                     const devs = Array.isArray(game.dev) ? game.dev : [];
                     return devs.includes(devId);
@@ -34,7 +42,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         gamesContainer.innerHTML = '';
         
         validGames.forEach(game => {
-            const gameElement = createGameElement(game, tagsConfig);
+            const isSecret = game.id.startsWith('_secret');
+            
+            if (isSecret) {
+                const target = parseAsMskTime(game.revealDate);
+                if (isNaN(target)) return;
+                const diff = target - now;
+                if (diff <= 0) return;
+            }
+            
+            const gameElement = createGameElement(game, tagsList);
             gamesContainer.appendChild(gameElement);
         });
         
@@ -43,26 +60,37 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-function createGameElement(game, tagsConfig) {
+function parseAsMskTime(isoString) {
+    if (typeof isoString !== 'string') return NaN;
+    const clean = isoString.trim().replace('Z', '');
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(clean)) return NaN;
+    const parts = clean.split('T');
+    if (parts.length !== 2) return NaN;
+    const [datePart, timePart] = parts;
+    const dateSegments = datePart.split('-').map(Number);
+    const timeSegments = timePart.split(':').map(Number);
+    if (dateSegments.length < 3 || timeSegments.length < 3) return NaN;
+    const [year, month, day] = dateSegments;
+    const [hours, minutes, seconds] = timeSegments;
+    if (!year || !month || !day) return NaN;
+    return Date.UTC(year, month - 1, day, hours - 3, minutes, seconds);
+}
+
+function createGameElement(game, tagsList) {
     const gameDiv = document.createElement('div');
-    gameDiv.className = 'game';
+    gameDiv.className = 'game no-select';
+
+    if (!game.visible) {
+        gameDiv.style.display = 'none';
+    }
 
     const gameContainer = document.createElement('div');
     gameContainer.className = 'game-container';
 
-    if (!game.visible) {
-        gameDiv.style.display = "none";
-    }
-
     const backgroundPath = game.indexPage.backgroundPath;
     const isVideo = backgroundPath.endsWith('.mp4') || backgroundPath.endsWith('.webm');
 
-    const opacity = game.indexPage.backgroundOpacity !== undefined ? game.indexPage.backgroundOpacity : 1;
-    const contrast = game.indexPage.backgroundContrast !== undefined ? game.indexPage.backgroundContrast : 1;
-    const brightness = game.indexPage.backgroundBrightness !== undefined ? game.indexPage.backgroundBrightness : 1;
-    const blur = game.indexPage.backgroundBlur !== undefined ? game.indexPage.backgroundBlur : 0;
-
-    const filter = `contrast(${contrast}) brightness(${brightness}) blur(${blur}px)`;
+    const opacity = game.indexPage.opacity ?? 1;
 
     if (isVideo) {
         const video = document.createElement('video');
@@ -73,7 +101,6 @@ function createGameElement(game, tagsConfig) {
         video.playsInline = true;
         video.className = 'background';
         video.style.opacity = opacity;
-        video.style.filter = filter;
         gameContainer.appendChild(video);
     } else {
         const img = document.createElement('img');
@@ -81,74 +108,177 @@ function createGameElement(game, tagsConfig) {
         img.alt = '';
         img.className = 'background';
         img.style.opacity = opacity;
-        img.style.filter = filter;
         gameContainer.appendChild(img);
     }
 
     const gameContent = document.createElement('div');
     gameContent.className = 'game-content';
 
-    const gameInfo = document.createElement('div');
-    gameInfo.className = 'game-info';
+    const isSecret = game.id.startsWith('_secret');
 
-    const titleContainer = document.createElement('div');
-    titleContainer.className = 'title-container';
+    if (isSecret) {
+        const secretWrapper = document.createElement('div');
+        secretWrapper.className = 'secret-game-wrapper game';
 
-    const title = document.createElement('p');
-    title.className = 'title';
-    title.textContent = game.name;
+        const contentTop = document.createElement('div');
+        contentTop.style.flex = '1';
+        contentTop.style.display = 'flex';
+        contentTop.style.flexDirection = 'column';
+        contentTop.style.justifyContent = 'center';
+        contentTop.style.alignItems = 'center';
 
-    titleContainer.appendChild(title);
+        const secretTitle = document.createElement('h2');
+        secretTitle.className = 'secret-title';
+        secretTitle.textContent = game.name || '???';
 
-    if (game.status) {
-        const note = document.createElement('p');
-        note.className = 'status';
-        note.textContent = game.status;
-        note.style.backgroundColor = !game.statusColor ? "var(--accent-color)" : game.statusColor;
-        titleContainer.appendChild(note);
-    }
+        const timerDiv = document.createElement('div');
+        timerDiv.className = 'secret-timer';
+        timerDiv.id = `timer-${game.id}`;
 
-    gameInfo.appendChild(titleContainer);
-    gameContent.appendChild(gameInfo);
+        contentTop.appendChild(secretTitle);
+        contentTop.appendChild(timerDiv);
+        secretWrapper.appendChild(contentTop);
 
-    const rightPart = document.createElement('div');
-    rightPart.className = 'right-part';
-
-    const gamePoster = document.createElement('div');
-    gamePoster.className = 'game-poster';
-
-    if (game.poster) {
-        const isPosterVideo = game.poster.endsWith('.mp4') || game.poster.endsWith('.webm');
-
-        if (isPosterVideo) {
-            const posterVideo = document.createElement('video');
-            posterVideo.src = 'assets/pages/games/' + game.id + '/' + game.poster;
-            posterVideo.autoplay = true;
-            posterVideo.loop = true;
-            posterVideo.muted = true;
-            posterVideo.playsInline = true;
-            posterVideo.className = 'poster';
-            gamePoster.appendChild(posterVideo);
+        const mskTimestamp = parseAsMskTime(game.revealDate);
+        const fullDate = document.createElement('div');
+        fullDate.className = 'secret-full-date';
+        if (!isNaN(mskTimestamp)) {
+            const mskDate = new Date(mskTimestamp);
+            fullDate.textContent = mskDate.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
         } else {
-            const posterImg = document.createElement('img');
-            posterImg.src = 'assets/pages/games/' + game.id + '/' + game.poster;
-            posterImg.alt = '';
-            posterImg.className = 'poster';
-            gamePoster.appendChild(posterImg);
+            fullDate.textContent = '??';
         }
+
+        secretWrapper.appendChild(fullDate);
+        gameContent.appendChild(secretWrapper);
+
+        updateSecretTimer(game, timerDiv);
+        setInterval(() => updateSecretTimer(game, timerDiv), 1000);
+    } else {
+        const gameInfo = document.createElement('div');
+        gameInfo.className = 'game-info';
+
+        const titleContainer = document.createElement('div');
+        titleContainer.className = 'title-container';
+
+        const title = document.createElement('p');
+        title.className = 'title';
+        title.textContent = game.name;
+
+        titleContainer.appendChild(title);
+
+        if (game.status) {
+            const note = document.createElement('p');
+            note.className = 'status';
+            note.textContent = game.status;
+            note.style.backgroundColor = 'var(--accent-color)';
+            titleContainer.appendChild(note);
+        }
+
+        gameInfo.appendChild(titleContainer);
+
+        const rightPart = document.createElement('div');
+        rightPart.className = 'right-part';
+
+        const gamePoster = document.createElement('div');
+        gamePoster.className = 'game-poster';
+
+        if (game.poster) {
+            const isPosterVideo = game.poster.endsWith('.mp4') || game.poster.endsWith('.webm');
+            const posterPath = `assets/pages/games/${game.id}/${game.poster}`;
+
+            if (isPosterVideo) {
+                const posterVideo = document.createElement('video');
+                posterVideo.src = posterPath;
+                posterVideo.autoplay = true;
+                posterVideo.loop = true;
+                posterVideo.muted = true;
+                posterVideo.playsInline = true;
+                posterVideo.className = 'poster';
+                gamePoster.appendChild(posterVideo);
+            } else {
+                const posterImg = document.createElement('img');
+                posterImg.src = posterPath;
+                posterImg.alt = '';
+                posterImg.className = 'poster';
+                gamePoster.appendChild(posterImg);
+            }
+        }
+
+        rightPart.appendChild(gamePoster);
+
+        const gameLink = document.createElement('a');
+        gameLink.href = `game-single.html?id=${game.id}`;
+        gameLink.className = 'game-link';
+        gameLink.textContent = 'к игре';
+        rightPart.appendChild(gameLink);
+
+        gameContent.appendChild(gameInfo);
+        gameContent.appendChild(rightPart);
     }
 
-    rightPart.appendChild(gamePoster);
-
-    const gameLink = document.createElement('a');
-    gameLink.href = `game-single.html?id=${game.id}`;
-    gameLink.className = 'game-link';
-    gameLink.textContent = 'к игре';
-    rightPart.appendChild(gameLink);
-
-    gameContent.appendChild(rightPart);
     gameContainer.appendChild(gameContent);
     gameDiv.appendChild(gameContainer);
 
     return gameDiv;
+}
+
+function updateSecretTimer(game, element) {
+    const target = parseAsMskTime(game.revealDate);
+    const now = Date.now();
+    if (isNaN(target)) {
+        element.textContent = '—';
+        return;
+    }
+    const diff = target - now;
+
+    const gameContainer = element.closest('.game');
+    if (!gameContainer) return;
+
+    element.classList.remove('last-10-seconds', 'last-3-seconds');
+
+    if (diff <= 0) {
+        gameContainer.classList.add('disappearing');
+        setTimeout(() => gameContainer.remove(), 900);
+        return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    if (diff <= 10000) {
+        element.classList.add('last-10-seconds');
+    }
+
+    element.innerHTML = '';
+
+    const timeParts = [
+        { value: days, label: 'дней' },
+        { value: hours, label: 'часов' },
+        { value: minutes, label: 'минут' },
+        { value: seconds, label: 'секунд' }
+    ];
+
+    timeParts.forEach(part => {
+        const partDiv = document.createElement('div');
+        partDiv.className = 'timer-part';
+
+        const valueDiv = document.createElement('div');
+        valueDiv.className = 'timer-value';
+        valueDiv.textContent = String(part.value).padStart(2, '0');
+
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'timer-label';
+        labelDiv.textContent = part.label;
+
+        partDiv.appendChild(valueDiv);
+        partDiv.appendChild(labelDiv);
+        element.appendChild(partDiv);
+    });
 }

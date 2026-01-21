@@ -271,3 +271,110 @@
         }
     }
 }
+
+.secret-game-wrapper {
+    text-align: center;
+    color: #fff;
+    font-family: 'DelaGothicOne', sans-serif;
+    z-index: 3;
+    pointer-events: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+
+.secret-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    letter-spacing: 4px;
+}
+
+.secret-timer {
+    display: flex;
+    gap: 30px;
+    font-family: 'Circle-Bold', sans-serif;
+    letter-spacing: 1px;
+    justify-content: center;
+    align-items: flex-start;
+    font-variant-numeric: tabular-nums;
+    color: transparent;
+}
+
+.timer-part {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.timer-value {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-family: 'DelaGothicOne', sans-serif;
+    line-height: 1;
+    -webkit-text-stroke: 0.05px #ffffff;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-weight: bold;
+}
+
+.timer-value {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-family: 'DelaGothicOne', sans-serif;
+    line-height: 1;
+    -webkit-text-stroke: 0.05px #ffffff;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.timer-label {
+    font-size: 18px;
+    margin-top: 8px;
+    font-family: 'Circle-Regular', sans-serif;
+    color: var(--text-secondary);
+}
+
+.secret-full-date {
+    font-family: 'Circle-Regular', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    width: 100%;
+    line-height: 1.2;
+}
+
+
+@media (max-width: 360px) {
+    .secret-title {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .secret-timer {
+        gap: 16px;
+        justify-content: center;
+    }
+
+    .timer-value {
+        font-size: 2rem;
+    }
+
+    .timer-label {
+        font-size: 0.8rem;
+    }
+
+    .secret-full-date {
+        font-size: 0.85rem;
+        white-space: normal;
+        max-width: 100%;
+        line-height: 1.3;
+    }
+}

@@ -37,7 +37,7 @@
                   <ul class="tags" id="game-tags"></ul>
                   <div class="right-part">
                     <p class="description" id="game-description"></p>
-                    <a href="#" id="game-link" class="game-link" target="_blank">Скачать</a>
+                    <a href="#" id="game-link" class="game-link no-select" target="_blank">скачать</a>
                   </div>
                 </div>
                 <div class="game-poster">
@@ -51,7 +51,6 @@
     </section>
     
     <section class="screenshots-section full-width empty" id="screenshots-section" style="display: none;">
-      <h3 class="section-title">Скриншоты</h3>
       <div class="screenshots-slider-container full">
         <button class="slider-btn prev-btn" id="prev-screenshot"><i class="fa-solid fa-caret-left"></i></button>
         <div class="screenshots-slider" id="screenshots-slider"></div>
@@ -81,6 +80,28 @@
   </main>
 
   <footer id="footer-container"></footer>
+
+  <div class="download-modal no-select" id="download-modal">
+    <div class="download-modal-content">
+      <span class="download-modal-close" id="download-modal-close">&times;</span>
+      <h3>Выберите тип скачивания</h3>
+      <div class="download-options">
+        <a href="#" id="direct-option" class="download-option-link" target="_blank">
+          <div class="download-option">
+            <img src="assets/images/logo_icon.svg" alt="" class="download-icon">
+            <span class="download-btn">прямое</span>
+          </div>
+        </a>
+
+        <a href="#" id="minecraft-inside-option" class="download-option-link" target="_blank">
+          <div class="download-option">
+            <img src="assets/images/minecraft-inside_icon.png" alt="" class="download-icon">
+            <span class="download-btn">minecraft-inside</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <script src="js/main/burger_menu.js" defer></script>
   <script src="js/main/games_dropdown.js" defer></script>

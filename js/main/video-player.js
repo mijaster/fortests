@@ -10,10 +10,7 @@ class VideoPlayer {
     this.muteBtn = document.getElementById('mute-btn');
     this.volumeBar = document.getElementById('volume-bar');
     this.fullscreenBtn = document.getElementById('fullscreen-btn');
-    this.titleElement = document.getElementById('video-title');
-    this.gamePageLink = document.getElementById('game-page-link');
     this.controls = document.getElementById('video-controls') || document.querySelector('.video-controls');
-    this.overlayTop = document.getElementById('video-overlay-top') || document.querySelector('.video-overlay-top');
     this.prevTrailerBtn = document.getElementById('prev-trailer');
     this.nextTrailerBtn = document.getElementById('next-trailer');
     this.fullscreenContainer = document.getElementById('video-fullscreen-container');
@@ -42,10 +39,7 @@ class VideoPlayer {
       this.muteBtn = document.getElementById('mute-btn');
       this.volumeBar = document.getElementById('volume-bar');
       this.fullscreenBtn = document.getElementById('fullscreen-btn');
-      this.titleElement = document.getElementById('video-title');
-      this.gamePageLink = document.getElementById('game-page-link');
       this.controls = document.getElementById('video-controls') || document.querySelector('.video-controls');
-      this.overlayTop = document.getElementById('video-overlay-top') || document.querySelector('.video-overlay-top');
       this.prevTrailerBtn = document.getElementById('prev-trailer');
       this.nextTrailerBtn = document.getElementById('next-trailer');
       this.fullscreenContainer = document.getElementById('video-fullscreen-container');
@@ -142,12 +136,6 @@ class VideoPlayer {
   showControls() {
     const isFullscreen = this.isFullscreen();
 
-    if (isFullscreen) {
-      this.overlayTop.style.display = 'none';
-    } else {
-      this.overlayTop.style.display = '';
-    }
-
     this.controls.classList.remove('hidden');
     this.fullscreenContainer.classList.remove('hide-cursor');
 
@@ -234,13 +222,6 @@ class VideoPlayer {
     const isFullscreen = this.isFullscreen();
     const icon = isFullscreen ? 'fa-compress' : 'fa-expand';
     this.fullscreenBtn.innerHTML = `<i class="fas ${icon}"></i>`;
-
-    if (isFullscreen) {
-      this.overlayTop.style.display = 'none';
-    } else {
-      this.overlayTop.style.display = '';
-    }
-
     this.showControls();
     this.handleOrientation();
   }
@@ -292,13 +273,8 @@ class VideoPlayer {
   play(src, poster = '', title = 'Видео', gameId = null, showNav = false) {
     this.video.src = src;
     this.video.poster = poster;
-    this.titleElement.textContent = title;
 
-    const isOnGameSingle = window.location.pathname.includes('game-single.html');
-    this.gamePageLink.style.display = gameId && !isOnGameSingle ? 'inline-block' : 'none';
-    if (gameId && !isOnGameSingle) {
-      this.gamePageLink.href = `game-single.html?id=${gameId}`;
-    }
+    // УДАЛЕНО: работа с game-page-link (game-cta-btn)
 
     this.prevTrailerBtn.style.display = showNav ? 'flex' : 'none';
     this.nextTrailerBtn.style.display = showNav ? 'flex' : 'none';
@@ -313,7 +289,6 @@ class VideoPlayer {
     };
 
     this.playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-    this.overlayTop.style.display = '';
     this.showControls();
     this.handleOrientation();
   }

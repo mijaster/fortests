@@ -209,6 +209,7 @@
   border: 1px solid #fff;
   text-decoration: none;
   transition: all 0.3s ease;
+  text-transform: uppercase;
 }
 
 .game-link:disabled {
@@ -500,15 +501,13 @@
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
-}
-
-.trailer-card:hover {
-  transform: scale(1.03);
+  display: flex;
+  flex-direction: column;
 }
 
 .trailer-preview {
   width: 100%;
-  height: 100%;
+  height: 450px;
   object-fit: cover;
 }
 
@@ -529,6 +528,23 @@
   backdrop-filter: blur(5px);
   border: 2px solid white;
   opacity: 0.9;
+  pointer-events: none;
+}
+
+.trailer-title {
+  padding: 14px 12px;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-family: 'DelaGothicOne', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trailer-card:hover {
+  transform: scale(1.03);
 }
 
 .music-section {
@@ -536,6 +552,7 @@
   color: var(--text-color);
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
+  margin-top: 60px;
 }
 
 .music-playlists-container {
@@ -973,6 +990,56 @@
     display: flex;
     opacity: 1;
   }
+
+  .music-playlist-item {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .playlist-header {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .playlist-thumb img {
+    width: 90px;
+    height: 90px;
+    border-radius: 8px;
+  }
+
+  .playlist-info {
+    margin-left: 8px;
+  }
+
+  .playlist-name {
+    font-size: 1.1rem;
+  }
+
+  .playlist-duration {
+    font-size: 0.85rem;
+  }
+
+  .playlist-toggle {
+    margin-right: 20px;
+    font-size: 1.2rem;
+  }
+
+  .track-number {
+    flex: 0 0 25px;
+    font-size: 0.9rem;
+  }
+
+  .track-name {
+    font-size: 0.95rem;
+  }
+
+  .track-seek-inline {
+    flex: 20%;
+  }
+
+  .track-play-btn:hover {
+    background-color: transparent;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1076,95 +1143,6 @@
     width: 10px;
     height: 10px;
   }
-}
-
-.mobile-tap-hint {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 35px;
-  color: rgba(255, 255, 255, 0.85);
-  z-index: 5;
-  pointer-events: none;
-  opacity: 0;
-  animation: pulse 2s infinite, float 2s infinite ease-in-out;
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  background: #0000008c;
-  backdrop-filter: blur(10px);
-  border: 1px solid #555555;
-  width: 70px;
-  height: 70px;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.no-select,
-.no-select * {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  50% { transform: translate(-50%, -50%) translateY(-10px); }
-}
-
-@media (max-width: 900px) {
-  .playlist-thumb img {
-    width: 90px;
-    height: 90px;
-  }
-
-  .playlist-info {
-    margin-left: 8px;
-  }
-
-  .playlist-name {
-    font-size: 1.1rem;
-  }
-
-  .playlist-duration {
-    font-size: 0.85rem;
-  }
-
-  .playlist-toggle {
-    margin-right: 20px;
-    font-size: 1.2rem;
-  }
-
-  .track-number {
-    flex: 0 0 25px;
-    font-size: 0.9rem;
-  }
-
-  .track-name {
-    font-size: 0.95rem;
-  }
-
-  .track-seek-inline {
-    flex: 20%;
-  }
-
-  .track-play-btn {
-    width: 32px;
-    height: 32px;
-  }
-  .track-play-btn:hover {
-    background-color: transparent;
-  }
-}
-
-@media (max-width: 480px) {
 
   .music-playlist-item {
     border-radius: 12px;
@@ -1325,5 +1303,243 @@
     width: 18px;
     height: 18px;
     font-size: 22px;
+  }
+}
+
+.mobile-tap-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 35px;
+  color: rgba(255, 255, 255, 0.85);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  animation: pulse 2s infinite, float 2s infinite ease-in-out;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  background: #0000008c;
+  backdrop-filter: blur(10px);
+  border: 1px solid #555555;
+  width: 70px;
+  height: 70px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+.download-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.download-modal.open {
+  display: flex;
+  opacity: 1;
+}
+
+.download-modal-content {
+  background-color: var(--bg-color);
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  position: relative;
+  animation: modalFadeIn 0.3s ease forwards;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+.download-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  font-size: 38px;
+  font-weight: bold;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.download-modal-close:hover {
+  color: #fff;
+}
+
+.download-modal h3 {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.download-options {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  margin-top: 25px;
+  flex-direction: row;
+}
+
+.download-option-link {
+  flex: 1;
+  max-width: 240px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 160px;
+  width: 100%;
+  min-height: 150px;
+  gap: 2.5px;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+}
+
+.download-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.download-icon {
+  width: 48px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.download-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.download-btn {
+  font-family: 'DelaGothicOne', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: normal;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.download-option:hover .download-btn,
+.download-option:hover .download-icon img {
+  opacity: 1;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 550px) {
+  .download-options {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .download-option-link {
+    max-width: none;
+    width: 100%;
+  }
+
+  .download-modal-content {
+    max-width: 400px;
+    padding: 25px 20px;
+  }
+
+  .download-modal h3 {
+    font-size: 18px;
+  }
+
+  .download-option {
+    height: 150px;
+    padding: 20px 15px;
+    justify-content: center;
+  }
+
+  .download-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .download-btn {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .download-modal-content {
+    padding: 20px 15px;
+    margin: 20px;
+  }
+
+  .download-modal h3 {
+    font-size: 16px;
+  }
+
+  .download-option {
+    height: 140px;
+    padding: 18px 12px;
+  }
+
+  .download-icon {
+    width: 55px;
+    height: 55px;
+  }
+
+  .download-btn {
+    font-size: 13px;
   }
 }

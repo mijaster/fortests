@@ -257,24 +257,56 @@ footer {
     transform: translateY(-2px);
 }
 
-.liquid-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background: #0f0c29;
-  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+.no-select,
+.no-select * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.liquid-glass {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg"><filter id="liquid"><feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="2" seed="2" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="20" /></filter><rect width="800" height="600" filter="url(%23liquid)" fill="hsla(220, 70%, 50%, 0.2)" /></svg>');
-  opacity: 0.6;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  transition: transform 0.1s ease;
+@keyframes pulseScale {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.95; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes subtleShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-1px); }
+    75% { transform: translateX(1px); }
+}
+
+.last-10-seconds .timer-value {
+    animation: pulseScale 0.4s infinite, subtleShake 0.1s infinite;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.game.disappearing {
+    opacity: 1;
+    transition: none;
+    animation: fadeToShadow 0.9s forwards;
+    pointer-events: none;
+}
+
+@keyframes fadeToShadow {
+    0% {
+        opacity: 1;
+        filter: blur(0) brightness(1);
+        transform: scale(1);
+    }
+    30% {
+        filter: brightness(0.9) saturate(0.9);
+    }
+    60% {
+        opacity: 0.7;
+        filter: blur(1px) brightness(0.8) saturate(0.7);
+        transform: scale(0.99);
+    }
+    100% {
+        opacity: 0;
+        filter: blur(2px) brightness(0.6) saturate(0.5);
+        transform: scale(0.97);
+    }
 }

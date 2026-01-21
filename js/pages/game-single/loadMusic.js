@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch('json/games.json');
     if (!response.ok) return;
 
-    const gamesData = await response.json();
-    const game = gamesData[gameKey];
+    const data = await response.json();
+    const game = data.projects?.[gameKey];
 
     if (!game || !Array.isArray(game.music) || game.music.length === 0) return;
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         let totalDuration = 0;
 
         const loadDurations = async () => {
-            const durationPromises = playlist.files.map(async (track) => {
+            const durationPromises = playlist.tracks.map(async (track) => {
                 const fileSrc = `assets/pages/games/${gameKey}/music/files/${track.file}`;
                 const duration = await getDuration(fileSrc);
                 return duration;
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadDurations();
 
         const loadTracks = async (playlist, gameKey, tracksList) => {
-            for (const [index, track] of playlist.files.entries()) {
+            for (const [index, track] of playlist.tracks.entries()) {
                 const fileSrc = `assets/pages/games/${gameKey}/music/files/${track.file}`;
                 const duration = await getDuration(fileSrc);
 
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 li.dataset.file = fileSrc;
                 li.innerHTML = `
                     <span class="track-number">${index + 1}.</span>
-                    <span class="track-name">${track.name}</span>
+                    <span class="track-name">${track.title}</span>
                     <span class="track-current-time">0:00</span>
                     <input type="range" class="track-seek-inline" value="0" min="0" max="100" step="1">
                     <span class="track-duration">${formatTime(duration)}</span>

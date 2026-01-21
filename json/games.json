@@ -1,113 +1,95 @@
 {
-    "lc": {
-        "name": "Lethal Company",
-        "status": "демо",
-        "statusColor": "",
-        "dev": [
-            "ms",
-            "nojoke0",
-            "cube"
-        ],
-        "version": "1.12.2 Forge",
-        "description": "Станьте частью команды, которая работает на Компанию, собирая ценные ресурсы на уже давно заброшенных планетах — звучит как простая работа, не так ли? Но каждый вылет превращается в настоящий кошмар: вам встречаются неизвестные Компании объекты: ловушки и звуки, а может быть и что-то ещё... Работайте вместе, и помните: ошибка может стоить не только контракта, но и жизни. Игра сделана по мотивам оригинальной игры Lethal Company от Zeekers.",
-        "poster": "animation.mp4",
-        "downloadable": false,
-        "link": "#",
-        "visible": true,
-        "tags": [
-            "coop",
-            "horror",
-            "single",
-            "comedy"
-        ],
-        "indexPage": {
-            "backgroundPath": "assets/pages/games/lc/screens/6.png",
-            "backgroundOpacity": 0.4,
-            "backgroundContrast": 1,
-            "backgroundBrightness": 1,
-            "backgroundBlur": 0
-        },
-        "screenshots": ["2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png"],
-        "music": [
-            {
-                "name": "Lethal Company OST",
-                "cover": "cover.png",
-                "files": [
-                    {
-                        "file": "1.mp3",
-                        "name": "Eskimo - Kondensat"
-                    },
-                    {
-                        "file": "2.mp3",
-                        "name": "houp - Backrooms"
-                    },
-                    {
-                        "file": "3.mp3",
-                        "name": "rofoshristo - Chilblain"
-                    }
-                ]
-            }
-        ]
+  "projects": {
+    "_secret_project": {
+      "name": "???",
+      "dev": ["ms", "cube"],
+      "status": null,
+      "players": { "min": 1, "max": 1 },
+      "version": "",
+      "revealDate": "2026-01-26T21:29:00",
+      "description": "",
+      "poster": "poster.png",
+      "downloadable": false,
+      "visible": true,
+      "tags": [],
+      "screenshots": [],
+      "music": [],
+      "trailers": [],
+      "indexPage": {
+        "backgroundPath": "assets/pages/games/_secret/1.png",
+        "opacity": 0.7
+      }
+    },
+    "ch": {
+      "name": "Christmas Helpers",
+      "dev": ["cube", "ms"],
+      "status": null,
+      "players": { "min": 1, "max": 2 },
+      "version": "1.12.2 Forge",
+      "releaseDate": "01.04.2026",
+      "revealDate": "2026-01-21T20:09:00",
+      "description": "Помогайте Санте исполнить детские мечты в рождественскую ночь - читайте письма, собирайте игрушки, не дайте духу Рождества уйти!",
+      "poster": "poster.png",
+      "downloadable": true,
+      "downloadLinks": { "direct": "christmas_helpers.rar", "minecraft-inside": "https://minecraft-inside.ru/maps/190297-the-by-n0nne1.html" },
+      "visible": true,
+      "tags": ["кооператив", "одиночная", "аркада"],
+      "screenshots": ["0.png", "1.png", "2.png", "3.png", "4.png", "5.png"],
+      "music": [
+        {
+          "name": "Музыка из Christmas Helpers",
+          "cover": "cover.png",
+          "tracks": [
+            { "file": "1.mp3", "title": "rofoshristo - Chilblain" },
+            { "file": "2.mp3", "title": "rofoshristo - Frozen" },
+            { "file": "3.mp3", "title": "rofoshristo - Snowfall" }
+          ]
+        }
+      ],
+      "trailers": [],
+      "indexPage": {
+        "backgroundPath": "assets/pages/games/ch/screens/5.png",
+        "opacity": 0.5
+      }
     },
     "die": {
-        "name": "D.I.E.",
-        "status": "rework",
-        "dev": [
-            "ms",
-            "cube"
-        ],
-        "version": "1.12.2 Forge",
-        "realiseDate": "01.01.2026",
-        "realiseTime": "12:00",
-        "description": "Погрузитесь в лабораторию, полную хаоса. Вы играете за учёных, столкнувшихся с последствиями опасного Эксперимента, вышедшего из-под контроля.<br>Ваша задача — выжить, выполняя все действия для вашего выживания. Ищите детали и предметы, чтобы в открыть путь к спасению. Выполняя задания и играя в мини-игры, получайте ценные монеты, необходимые вам в игре.<br>Сможете ли вы починить лифт и сбежать из объекта? Время узнать это!",
-        "poster": "poster.png",
-        "downloadable": false,
-        "link": "#",
-        "visible": true,
-        "tags": [
-            "coop",
-            "horror",
-            "single",
-            "comedy"
-        ],
-        "screenshots": ["1.png", "2.png", "3.png", "4.png", "5.png"],
-        "music": [
-            {
-                "name": "Музыка из D.I.E. : rework",
-                "cover": "cover.png",
-                "files": [
-                    {
-                        "file": "1.mp3",
-                        "name": "Eskimo - Kondensat"
-                    },
-                    {
-                        "file": "2.mp3",
-                        "name": "houp - Backrooms"
-                    },
-                    {
-                        "file": "3.mp3",
-                        "name": "rofoshristo - Chilblain"
-                    }
-                ]
-            }
-        ],
-        "trailersPage": [
-            {
-                "file": "main.mp4",
-                "preview": "main.png",
-                "name": "D.I.E. : rework - главный трейлер",
-                "addToSinglePage": true
-            }
-        ],
-        "indexPage": {
-            "hideDescription": true,
-            "description": "",
-            "hideTags": true,
-            "backgroundPath": "assets/pages/games/die/background.png",
-            "backgroundOpacity": 0.8,
-            "backgroundContrast": 1,
-            "backgroundBrightness": 1,
-            "backgroundBlur": 0
+      "name": "D.I.E.",
+      "dev": ["ms", "cube"],
+      "status": "rework",
+      "players": { "min": 2, "max": 0 },
+      "version": "1.12.2 Forge",
+      "revealDate": "2026-01-18T05:00:00",
+      "description": "Погрузитесь в лабораторию, полную хаоса. Вы играете за учёных, столкнувшихся с последствиями опасного Эксперимента, вышедшего из-под контроля.<br>Ваша задача — выжить, выполняя все действия для вашего выживания. Ищите детали и предметы, чтобы в открыть путь к спасению. Выполняя задания и играя в мини-игры, получайте ценные монеты, необходимые вам в игре.<br>Сможете ли вы починить лифт и сбежать из объекта? Время узнать это!",
+      "poster": "poster.png",
+      "downloadable": false,
+      "downloadLinks": { "direct": "", "minecaft-inside": "" },
+      "visible": true,
+      "tags": ["кооператив", "хоррор", "атмосферная"],
+      "screenshots": ["1.png", "2.png", "3.png", "4.png", "5.png"],
+      "music": [
+        {
+          "name": "Музыка из D.I.E. : rework",
+          "cover": "cover.png",
+          "tracks": [
+            { "file": "1.mp3", "title": "Eskimo - Kondensat" },
+            { "file": "2.mp3", "title": "houp - Backrooms" },
+            { "file": "3.mp3", "title": "rofoshristo - Chilblain" }
+          ]
         }
+      ],
+      "trailers": [
+        {
+          "file": "main.mp4",
+          "preview": "main.png",
+          "title": "D.I.E. : rework - главный трейлер",
+          "addToSinglePage": true
+        }
+      ],
+      "indexPage": {
+        "backgroundPath": "assets/pages/games/die/background.png",
+        "opacity": 0.8
+      }
     }
+  },
+  "tags": ["хоррор", "кооператив", "одиночная", "атмосферная", "сюжетная", "аркада", "симулятор"]
 }

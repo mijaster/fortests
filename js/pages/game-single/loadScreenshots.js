@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const games = await response.json();
-    const game = games[gameId];
+    const game = games.projects[gameId];
 
     if (!game) {
       console.warn(`[Screenshots] Игра с ID "${gameId}" не найдена в games.json`);

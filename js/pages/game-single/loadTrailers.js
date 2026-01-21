@@ -4,15 +4,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     const response = await fetch('json/games.json');
-    const games = await response.json();
-    const game = games[gameId];
+    const data = await response.json();
+    const game = data.projects?.[gameId];
 
-    if (!game || !game.trailersPage || !Array.isArray(game.trailersPage)) return;
+    if (!game || !Array.isArray(game.trailers)) return;
 
     const trailersSection = document.getElementById('trailers-section');
     const trailersContainer = document.getElementById('trailers-container');
 
-    const trailersToAdd = game.trailersPage.filter(trailer => trailer.addToSinglePage);
+    const trailersToAdd = game.trailers.filter(trailer => trailer.addToSinglePage);
 
     if (trailersToAdd.length === 0) return;
 
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const trailerSrc = `assets/pages/games/${gameId}/trailers/${trailer.file}`;
       const posterSrc = `assets/pages/games/${gameId}/previews/${trailer.preview}`;
-      const trailerName = trailer.name || 'Трейлер';
+      const trailerName = trailer.title || 'Трейлер';
 
       const playHandler = () => {
         window.videoPlayer.play(trailerSrc, posterSrc, trailerName, gameId);
@@ -43,8 +43,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       previewImg.addEventListener('click', playHandler);
       playButton.addEventListener('click', playHandler);
 
+      // === Добавляем название трейлера ===
+      const titleElement = document.createElement('div');
+      titleElement.className = 'trailer-title';
+      titleElement.textContent = trailer.title || 'Трейлер';
+      // ================================
+
+      // Собираем карточку
       trailerCard.appendChild(previewImg);
       trailerCard.appendChild(playButton);
+      trailerCard.appendChild(titleElement);
+
       trailersContainer.appendChild(trailerCard);
     });
   } catch (error) {
