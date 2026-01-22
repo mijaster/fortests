@@ -1,0 +1,49 @@
+{
+    "ms": {
+        "name": "Mijaster Studios",
+        "logo": "icon.svg",
+        "banner": "banner.mp4",
+        "description": "",
+        "contacts": [
+            "https://www.youtube.com/@mijaster_studios",
+            "https://t.me/mijastervibe",
+            "https://discord.gg/GS6fVXfG"
+        ],
+        "screens": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png"
+        ],
+        "bg": "linear-gradient(180deg, #2b2b2b 0%, #000000 100%)"
+    },
+    "cube": {
+        "name": "Cube",
+        "banner": "BannerCube2.png",
+        "logo": "icon.svg",
+        "description": " чем дальше в лес, тем скибиди доп доп ес",
+        "contacts": [
+            "https://t.me/mars_amTG",
+            "https://youtube.com/@mars_am"
+        ],
+        "screens":[
+            "1.png",
+            "2.png",
+            "3.png"
+        ],
+        "bg": "linear-gradient(180deg, #0088ff 0%, #ff0000 100%)"
+    },
+    "nojoke0": {
+        "name": "nojoke0",
+        "logo": "logo.jpg",
+        "banner": "banner.png",
+        "screens": [
+            "1.png",
+            "2.png",
+            "3.png"
+        ],
+        "contacts": [
+            "https://t.me/nojokeins"
+        ]
+    }
+}

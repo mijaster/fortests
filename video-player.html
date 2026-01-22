@@ -1,0 +1,41 @@
+<div class="no-select" id="video-player-container">
+  <div class="video-modal" id="video-modal">
+    <span class="modal-close" id="video-modal-close">&times;</span>
+    <button class="modal-nav prev-modal" id="prev-trailer" aria-label="Previous trailer">&lt;</button>
+    <button class="modal-nav next-modal" id="next-trailer" aria-label="Next trailer">&gt;</button>
+
+    <div class="video-fullscreen-container" id="video-fullscreen-container">
+
+      <div class="video-container">
+        <video id="video-player" preload="metadata" playsinline></video>
+      </div>
+
+      <div class="video-controls">
+        <div class="control-group">
+          <button id="play-pause-btn" class="control-btn" aria-label="Play/Pause">
+            <i class="fas fa-play"></i>
+          </button>
+        </div>
+
+        <div class="progress-group control-group">
+          <div class="time-display" id="current-time">00:00</div>
+          <input type="range" id="progress-bar" class="progress-bar" value="0" step="0.01" min="0" max="1">
+          <div class="time-display" id="duration">00:00</div>
+        </div>
+
+        <div class="volume-group control-group">
+          <button id="mute-btn" class="control-btn" aria-label="Mute/Unmute">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <input type="range" id="volume-bar" class="volume-bar" value="1" min="0" max="1" step="0.01">
+        </div>
+
+        <div class="control-group">
+          <button id="fullscreen-btn" class="control-btn" aria-label="Fullscreen">
+            <i class="fas fa-expand"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

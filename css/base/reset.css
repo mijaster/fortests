@@ -1,0 +1,72 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+input, button, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+button {
+    cursor: pointer;
+    background: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+address {
+    font-style: normal;
+}
+
+[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.hidden, [hidden] {
+    display: none !important;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+iframe {
+    border: 0;
+}
