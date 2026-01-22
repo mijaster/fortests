@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/components/preloader.css">
   <link rel="stylesheet" href="css/pages/game-single.css">
   <link rel="stylesheet" href="css/components/video-player.css">
+  <link rel="stylesheet" href="css/components/screenshots.css">
 </head>
 <body>
   <div id="preloader-container" class="preloader"></div>
@@ -49,23 +50,22 @@
         </div>
       </div>
     </section>
-    
-    <section class="screenshots-section full-width empty" id="screenshots-section" style="display: none;">
-      <div class="screenshots-slider-container full">
+
+    <section class="screenshots-section full-width empty no-select" id="screenshots-section" style="display: none;">
+      <div class="screenshots-slider-container full" id="screenshots-slider-container">
         <button class="slider-btn prev-btn" id="prev-screenshot"><i class="fa-solid fa-caret-left"></i></button>
         <div class="screenshots-slider" id="screenshots-slider"></div>
         <button class="slider-btn next-btn" id="next-screenshot"><i class="fa-solid fa-caret-right"></i></button>
-        <div class="mobile-tap-hint">
-          <i class="far fa-hand-pointer"></i>
-        </div>
+        <div class="mobile-tap-hint"><i class="fa-solid fa-hand-pointer"></i></div>
       </div>
     </section>
 
-    <div class="modal" id="screenshot-modal">
+    <div class="modal no-select" id="screenshot-modal">
       <span class="modal-close" id="modal-close">&times;</span>
       <button class="modal-nav prev-modal" id="prev-modal"><i class="fa-solid fa-caret-left"></i></button>
-      <img class="modal-content" id="modal-img">
+      <img class="modal-content" id="modal-img" alt="Скриншот">
       <button class="modal-nav next-modal" id="next-modal"><i class="fa-solid fa-caret-right"></i></button>
+      <div class="modal-counter" id="modal-counter"></div>
       <div class="modal-thumbnails-container">
         <div class="modal-thumbnails-slider" id="modal-screenshots-slider"></div>
       </div>
@@ -113,7 +113,7 @@
     import './js/main/main.js';
   </script>
   <script src="js/pages/game-single/loadGameInfo.js" defer></script>
-  <script src="js/pages/game-single/loadScreenshots.js" defer></script>
+  <script src="js/main/loadScreenshots.js" defer></script>
   <script src="js/main/video-player.js" defer></script>
   <script src="js/pages/game-single/loadTrailers.js" defer></script>
   <script src="js/pages/game-single/loadMusic.js" defer></script>

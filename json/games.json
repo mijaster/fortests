@@ -12,7 +12,7 @@
       "downloadable": false,
       "visible": true,
       "tags": [],
-      "screenshots": [],
+      "screens": [],
       "music": [],
       "trailers": [],
       "indexPage": {
@@ -34,7 +34,7 @@
       "downloadLinks": { "direct": "christmas_helpers.rar", "minecraft-inside": "https://minecraft-inside.ru/maps/190297-the-by-n0nne1.html" },
       "visible": true,
       "tags": ["кооператив", "одиночная", "аркада"],
-      "screenshots": ["0.png", "1.png", "2.png", "3.png", "4.png", "5.png"],
+      "screens": ["0.png", "1.png", "2.png", "3.png", "4.png", "5.png"],
       "music": [
         {
           "name": "Музыка из Christmas Helpers",
@@ -65,7 +65,7 @@
       "downloadLinks": { "direct": "", "minecaft-inside": "" },
       "visible": true,
       "tags": ["кооператив", "хоррор", "атмосферная"],
-      "screenshots": ["1.png", "2.png", "3.png", "4.png", "5.png"],
+      "screens": ["1.png", "2.png", "3.png", "4.png", "5.png"],
       "music": [
         {
           "name": "Музыка из D.I.E. : rework",
