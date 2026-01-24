@@ -186,7 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('game-title').textContent = 'Игра не найдена или скрыта';
         return;
       }
-
+      document.title = data.projects[gameId].name + " " + (data.projects[gameId].status ? data.projects[gameId].status : "");
+      
       return fetch('json/devs.json')
         .then(res => {
           if (!res.ok) throw new Error('Не удалось загрузить devs.json');

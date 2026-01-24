@@ -81,6 +81,16 @@ main {
     border-color: var(--btn-hover-border);
 }
 
+.btn i {
+    font-size: 12px;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.btn:hover i {
+    transform: translateX(4px);
+}
+
 header {
     position: fixed;
     top: 0;

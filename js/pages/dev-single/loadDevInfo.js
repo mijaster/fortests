@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      document.title = "Разработчик " + dev.name;
+
       const bannerEl = document.getElementById('dev-banner');
       if (dev.banner) {
         if (dev.banner.endsWith('.mp4')) {

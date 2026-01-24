@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/pages/game-single.css">
   <link rel="stylesheet" href="css/components/video-player.css">
   <link rel="stylesheet" href="css/components/screenshots.css">
+  <link rel="stylesheet" href="css/components/featuredTrailer.css">
 </head>
 <body>
   <div id="preloader-container" class="preloader"></div>
@@ -73,7 +74,7 @@
 
     <section class="trailers-section full-width" id="trailers-section" style="display: none;">
       <h3 class="section-title">Трейлеры</h3>
-      <div class="trailers-container" id="trailers-container"></div>
+      <div id="featuredTrailersContainer"></div>
     </section>
 
     <div id="video-player-container"></div>
@@ -114,8 +115,8 @@
   </script>
   <script src="js/pages/game-single/loadGameInfo.js" defer></script>
   <script src="js/main/loadScreenshots.js" defer></script>
+  <script src="js/main/loadVideos.js" defer></script>
   <script src="js/main/video-player.js" defer></script>
-  <script src="js/pages/game-single/loadTrailers.js" defer></script>
   <script src="js/pages/game-single/loadMusic.js" defer></script>
 </body>
 </html>

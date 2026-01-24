@@ -1,0 +1,81 @@
+.featured-trailer {
+    width: 1200px;
+    margin: 0 auto 20px;
+    overflow: hidden;
+}
+
+.featured-preview-container {
+    position: relative;
+    width: 100%;
+    padding-top: 50%;
+    overflow: hidden;
+}
+
+.featured-preview-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.featured-preview-container:hover .pause-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.featured-preview-container:hover .featured-preview-img {
+    opacity: 0.8;
+}
+
+.pause-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    color: white;
+    font-size: 80px;
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.featured-content {
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.featured-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.featured-title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #fff;
+    margin: 0 0 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.featured-game {
+    font-size: 14px;
+    color: #aaa;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

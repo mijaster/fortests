@@ -1,145 +1,119 @@
-.video-player-container {
-    position: relative;
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #000;
+.btn {
+  text-transform: lowercase;
+}
+
+.featured-trailer {
+    margin-top: 100px;
+}
+
+.trailers-wrapper {
+    width: 1200px;
+    margin: 0 auto 30px;
+    padding: 0 16px;
+}
+
+.trailers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.trailer-card {
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.video-player {
-    width: 100%;
-    display: block;
-    cursor: pointer;
-}
-
-.video-controls {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-    padding: 10px 30px;
     display: flex;
     flex-direction: column;
-    transition: opacity 0.3s;
-    opacity: 0;
 }
 
-.video-player-container:hover .video-controls {
-    opacity: 1;
-}
-
-.timeline-container {
+.preview-container {
+    position: relative;
     width: 100%;
-    padding: 5px 0;
-}
-
-.timeline {
-    width: 100%;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    cursor: pointer;
-    appearance: none;
-    outline: none;
-}
-
-.timeline::-webkit-slider-thumb {
-    appearance: none;
-    width: 7px;
-    height: 18px;
-    border-radius: 4px;
-    background: #fff;
-    cursor: pointer;
-}
-
-.controls-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 5px;
-}
-
-.left-controls {
-    display: flex;
-    align-items: center;
-    height: 40px;
-}
-
-.right-controls {
-    display: flex;
-    align-items: center;
-}
-
-.play-pause-btn, .volume-btn, .fullscreen-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 12px;
-    cursor: pointer;
-    padding: 5px 10px;
-    outline: none;
-}
-
-.play-pause-btn, .time-container {
-    background-color: #42424265;
-    padding: 2cap 25px;
+    aspect-ratio: 16/9;
+    overflow: hidden;
     border-radius: 8px;
+    margin-bottom: 5px;
 }
 
-.volume-container {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-}
-
-.volume-slider {
-    width: 70px;
-    height: 5px;
-    margin-left: 5px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    appearance: none;
-    outline: none;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.volume-container:hover .volume-slider {
-    opacity: 1;
-}
-
-.volume-slider::-webkit-slider-thumb {
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #fff;
-    cursor: pointer;
-}
-
-.time-container {
-    color: white;
-    font-size: 14px;
-    margin: 0 10px;
-}
-
-/* Fullscreen styles */
-.video-player-container.fullscreen {
-    position: fixed;
+.preview-img {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    max-width: none;
-    z-index: 1000;
-    border-radius: 0;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.25s ease;
 }
 
-.video-player-container.fullscreen .video-player {
-    height: 100%;
-    object-fit: contain;
+.trailer-card:hover .preview-img {
+    transform: scale(1.03);
+}
+
+.trailer-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.preview-container:hover .trailer-play-button {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.card-content {
+    display: flex;
+    padding: 10px 12px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.text-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.trailer-title {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0 0 3px 0;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-title {
+    font-size: 13px;
+    color: #aaa;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.no-trailers {
+    text-align: center;
+    color: #aaa;
+    font-style: italic;
+    padding: 20px;
+    grid-column: 1 / -1;
 }

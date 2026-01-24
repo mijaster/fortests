@@ -59,7 +59,7 @@
       "players": { "min": 2, "max": 0 },
       "version": "1.12.2 Forge",
       "revealDate": "2026-01-18T05:00:00",
-      "description": "Погрузитесь в лабораторию, полную хаоса. Вы играете за учёных, столкнувшихся с последствиями опасного Эксперимента, вышедшего из-под контроля.<br>Ваша задача — выжить, выполняя все действия для вашего выживания. Ищите детали и предметы, чтобы в открыть путь к спасению. Выполняя задания и играя в мини-игры, получайте ценные монеты, необходимые вам в игре.<br>Сможете ли вы починить лифт и сбежать из объекта? Время узнать это!",
+      "description": "Погрузитесь в мир, полный хаоса. Сыграйте за учёных, столкнувшихся с последствиями опасного Эксперимента, вышедшего из-под контроля. Ищите детали и предметы, чтобы в открыть путь к спасению. Выполняя задания и играя в мини-игры, получайте ценные монеты, необходимые вам в игре. Сможете ли вы дойти до конца объекта? Время узнать это!",
       "poster": "poster.png",
       "downloadable": false,
       "downloadLinks": { "direct": "", "minecaft-inside": "" },
@@ -80,9 +80,38 @@
       "trailers": [
         {
           "file": "main.mp4",
+          "preview": "test_1.jpg",
+          "title": "Poppy Playtime: Chapter 3 - Teaser Trailer #2",
+          "date": "2026-01-01",
+          "addToSinglePage": false
+        },
+        {
+          "file": "main.mp4",
+          "preview": "test_2.jpg",
+          "title": "Poppy Playtime: Chapter 2 - Official Game Trailer",
+          "date": "2026-01-01",
+          "addToSinglePage": false
+        },
+        {
+          "file": "main.mp4",
+          "preview": "test_3.jpg",
+          "title": "Poppy Playtime Chapter 4 - Accolades Trailer",
+          "date": "2026-01-01",
+          "addToSinglePage": false
+        },
+        {
+          "file": "main.mp4",
           "preview": "main.png",
           "title": "D.I.E. : rework - главный трейлер",
+          "date": "2026-01-20",
           "addToSinglePage": true
+        },
+        {
+          "file": "reanimal.mp4",
+          "preview": "reanimal.jpg",
+          "title": "REANIMAL Trailer #2",
+          "date": "2026-01-21",
+          "addToSinglePage": false
         }
       ],
       "indexPage": {

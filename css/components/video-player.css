@@ -518,3 +518,12 @@
     padding: 10px 14px;
   }
 }
+
+.video-fullscreen-container.hide-cursor,
+.video-fullscreen-container.hide-cursor .video-container,
+.video-fullscreen-container.hide-cursor video,
+.mobile-fullscreen.hide-cursor,
+.mobile-fullscreen.hide-cursor .video-container,
+.mobile-fullscreen.hide-cursor video {
+  cursor: none !important;
+}

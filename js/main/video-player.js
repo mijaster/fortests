@@ -274,8 +274,6 @@ class VideoPlayer {
     this.video.src = src;
     this.video.poster = poster;
 
-    // УДАЛЕНО: работа с game-page-link (game-cta-btn)
-
     this.prevTrailerBtn.style.display = showNav ? 'flex' : 'none';
     this.nextTrailerBtn.style.display = showNav ? 'flex' : 'none';
 
