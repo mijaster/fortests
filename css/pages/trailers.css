@@ -117,3 +117,63 @@
     padding: 20px;
     grid-column: 1 / -1;
 }
+
+/* ... существующий код выше ... */
+
+/* Адаптация для планшетов и мобильных */
+@media (max-width: 1200px) {
+  .trailers-wrapper {
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .trailers-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .trailers-wrapper {
+    padding: 0 8px;
+  }
+
+  .trailers-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .trailer-card {
+    max-width: 100%;
+  }
+
+  .preview-img {
+    border-radius: 8px;
+  }
+
+  .trailer-title {
+    font-size: 14px;
+  }
+
+  .game-title {
+    font-size: 12px;
+  }
+
+  .card-content {
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .trailer-title {
+    font-size: 13px;
+  }
+
+  .game-title {
+    font-size: 11px;
+  }
+
+  .preview-container {
+    margin-bottom: 4px;
+  }
+}

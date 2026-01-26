@@ -104,7 +104,7 @@ class VideoPlayer {
     document.addEventListener('mousemove', () => this.handleMouseMove());
     document.addEventListener('touchstart', () => this.handleMouseMove(), { passive: true });
     document.addEventListener('touchmove', () => this.handleMouseMove(), { passive: true });
-    document.addEventListener('keydown', () => this.showControls());
+    document.addEventListener('keydown', (e) => this.handleKeydown(e));
 
     document.addEventListener('fullscreenchange', () => this.onFullscreenChange());
     document.addEventListener('webkitfullscreenchange', () => this.onFullscreenChange());
@@ -303,6 +303,77 @@ class VideoPlayer {
     this.modal.classList.remove('active');
     this.clearHideTimeout();
     this.video.src = '';
+  }
+
+  handleKeydown(e) {
+    if (!this.modal.classList.contains('active')) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    let handled = false;
+
+    switch (e.code) {
+      case 'Space':
+        e.preventDefault();
+        this.togglePlay();
+        handled = true;
+        break;
+
+      case 'ArrowLeft':
+        e.preventDefault();
+        this.video.currentTime = Math.max(0, this.video.currentTime - 5);
+        handled = true;
+        break;
+
+      case 'ArrowRight':
+        e.preventDefault();
+        this.video.currentTime = Math.min(this.video.duration || Infinity, this.video.currentTime + 5);
+        handled = true;
+        break;
+
+      case 'ArrowUp':
+        e.preventDefault();
+        this.video.volume = Math.min(1, this.video.volume + 0.1);
+        this.video.muted = (this.video.volume === 0);
+        this.volumeBar.value = this.video.volume;
+        this.updateMuteIcon();
+        handled = true;
+        break;
+
+      case 'ArrowDown':
+        e.preventDefault();
+        this.video.volume = Math.max(0, this.video.volume - 0.1);
+        this.video.muted = (this.video.volume === 0);
+        this.volumeBar.value = this.video.volume;
+        this.updateMuteIcon();
+        handled = true;
+        break;
+
+      case 'KeyM':
+        e.preventDefault();
+        this.video.muted = !this.video.muted;
+        this.updateMuteIcon();
+        handled = true;
+        break;
+
+      case 'KeyF':
+        e.preventDefault();
+        this.toggleFullscreen();
+        handled = true;
+        break;
+
+      case 'Escape':
+        if (this.isFullscreen()) {
+          this.toggleFullscreen();
+        } else {
+          this.close();
+        }
+        handled = true;
+        break;
+    }
+
+    if (handled) {
+      this.showControls();
+    }
   }
 }
 

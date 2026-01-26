@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (isNaN(revealDate)) return false;
                 const isReleased = revealDate <= now;
                 
-                if (!isReleased && !game.id.startsWith('_secret')) {
+                if (!isReleased && !game.id.startsWith('!secret')) {
                     return false;
                 }
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         gamesContainer.innerHTML = '';
         
         validGames.forEach(game => {
-            const isSecret = game.id.startsWith('_secret');
+            const isSecret = game.id.startsWith('!secret');
             
             if (isSecret) {
                 const target = parseAsMskTime(game.revealDate);
@@ -114,7 +114,7 @@ function createGameElement(game, tagsList) {
     const gameContent = document.createElement('div');
     gameContent.className = 'game-content';
 
-    const isSecret = game.id.startsWith('_secret');
+    const isSecret = game.id.startsWith('!secret');
 
     if (isSecret) {
         const secretWrapper = document.createElement('div');
