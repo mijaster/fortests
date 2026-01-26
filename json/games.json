@@ -6,7 +6,7 @@
       "status": null,
       "players": { "min": 1, "max": 1 },
       "version": "",
-      "revealDate": "2026-01-24T20:35:00",
+      "revealDate": "2026-01-27T21:29:00",
       "description": "",
       "poster": "poster.png",
       "downloadable": false,
@@ -31,7 +31,7 @@
       "description": "Помогайте Санте исполнить детские мечты в рождественскую ночь - читайте письма, собирайте игрушки, не дайте духу Рождества уйти!",
       "poster": "poster.png",
       "downloadable": true,
-      "downloadLinks": { "direct": "christmas_helpers.rar", "minecraft-inside": "https://minecraft-inside.ru/maps/190297-the-by-n0nne1.html" },
+      "downloadLinks": { "direct": "christmas_helpers.zip", "minecraft-inside": "https://minecraft-inside.ru/190317/" },
       "visible": true,
       "tags": ["кооператив", "одиночная", "аркада"],
       "screens": ["0.png", "1.png", "2.png", "3.png", "4.png", "5.png"],
@@ -110,7 +110,7 @@
           "file": "reanimal.mp4",
           "preview": "reanimal.jpg",
           "title": "REANIMAL Trailer #2",
-          "date": "2026-01-21",
+          "date": "2026-01-28",
           "addToSinglePage": false
         }
       ],

@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const minecraftInsideOption = document.getElementById('minecraft-inside-option');
   const gameLink = document.getElementById('game-link');
 
+  // Настройки GitHub
+  const GITHUB_OWNER = 'mijaster';
+  const GITHUB_REPO = 'projects';
+  const GITHUB_BRANCH = 'main';
+
   downloadModalClose.addEventListener('click', () => {
     downloadModal.classList.remove('open');
     setTimeout(() => {
@@ -32,19 +37,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function getDirectDownloadLink(url) {
-    if (url.includes('drive.google.com/file/d/')) {
-      const idMatch = url.match(/file\/d\/([^\/]+)/);
-      if (idMatch && idMatch[1]) {
-        return `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
-      }
+  function getGitHubDownloadLink(filename, gameId) {
+    if (filename.startsWith('http')) {
+      return filename;
     }
-    return url;
+    
+    return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filename}`;
   }
 
-  async function getFileSize(url) {
+  async function getFileSize(url, gameId) {
     try {
-      const response = await fetch(url, { method: 'HEAD' });
+      let finalUrl = url;
+      if (!url.startsWith('http')) {
+        finalUrl = getGitHubDownloadLink(url, gameId);
+      } else if (url.includes('drive.google.com')) {
+        const idMatch = url.match(/file\/d\/([^\/]+)/);
+        if (idMatch && idMatch[1]) {
+          finalUrl = `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
+        }
+      }
+      
+      const response = await fetch(finalUrl, { method: 'HEAD' });
       const size = response.headers.get('content-length');
       if (size) {
         const num = parseInt(size, 10);
@@ -57,6 +70,21 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('Не удалось получить размер файла:', e);
     }
     return '';
+  }
+
+  function getDirectDownloadLink(url, gameId) {
+    if (url.includes('drive.google.com/file/d/')) {
+      const idMatch = url.match(/file\/d\/([^\/]+)/);
+      if (idMatch && idMatch[1]) {
+        return `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
+      }
+    }
+    
+    if (!url.startsWith('http')) {
+      return getGitHubDownloadLink(url, gameId);
+    }
+    
+    return url;
   }
 
   gameLink.addEventListener('click', async function (e) {
@@ -72,9 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (direct && !minecraftInside) {
       let finalUrl = direct;
       if (!direct.startsWith('http')) {
-        finalUrl = `assets/pages/games/${gameId}/versions/${direct}`;
+        finalUrl = getGitHubDownloadLink(direct, gameId);
       } else {
-        finalUrl = getDirectDownloadLink(direct);
+        finalUrl = getDirectDownloadLink(direct, gameId);
       }
       window.open(finalUrl, '_blank');
     } else if (!direct && minecraftInside) {
@@ -82,16 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (direct && minecraftInside) {
       let directUrl = direct;
       if (!direct.startsWith('http')) {
-        directUrl = `assets/pages/games/${gameId}/versions/${direct}`;
+        directUrl = getGitHubDownloadLink(direct, gameId);
       } else {
-        directUrl = getDirectDownloadLink(direct);
+        directUrl = getDirectDownloadLink(direct, gameId);
       }
 
       directOption.href = directUrl;
       minecraftInsideOption.href = minecraftInside;
       directOption.target = minecraftInsideOption.target = '_blank';
 
-      const directSize = await getFileSize(directUrl);
+      const directSize = await getFileSize(direct, gameId);
       const directBtn = directOption.querySelector('.download-btn');
       if (directSize) {
         directBtn.textContent = `прямое [${directSize}]`;
@@ -105,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+  
 
   function addAdditionalInfo(game, devsData) {
     if (!game.description || game.description === "") {
@@ -249,11 +278,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (downloadLinks.direct && !downloadLinks["minecraft-inside"]) {
               let directUrl = downloadLinks.direct;
               if (!directUrl.startsWith('http')) {
-                directUrl = `assets/pages/games/${gameId}/versions/${downloadLinks.direct}`;
+                directUrl = getGitHubDownloadLink(downloadLinks.direct, gameId);
               } else {
-                directUrl = getDirectDownloadLink(downloadLinks.direct);
+                directUrl = getDirectDownloadLink(downloadLinks.direct, gameId);
               }
-              const size = await getFileSize(directUrl);
+              const size = await getFileSize(downloadLinks.direct, gameId);
               if (size) {
                 gameLink.textContent = `скачать [${size}]`;
               }
