@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mijaster Studios</title>
+  <title>Figura Team</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
   <link rel="icon" href="assets/images/logo_icon.svg">
   <link rel="stylesheet" href="css/base/reset.css">
@@ -77,6 +77,16 @@
       <div id="featuredTrailersContainer"></div>
     </section>
 
+    <section class="updates-section full-width" id="updates-section" style="display: none;">
+      <h3 class="section-title">Обновления</h3>
+      <div class="updates-container" id="updates-container"></div>
+    </section>
+
+    <div class="modal no-select" id="update-modal">
+      <span class="modal-close" id="update-modal-close">&times;</span>
+      <div class="modal-content-container" id="update-modal-content"></div>
+    </div>
+
     <div id="video-player-container"></div>
   </main>
 
@@ -118,5 +128,6 @@
   <script src="js/main/loadVideos.js" defer></script>
   <script src="js/main/video-player.js" defer></script>
   <script src="js/pages/game-single/loadMusic.js" defer></script>
+  <script src="js/pages/game-single/loadUpdates.js" defer></script>
 </body>
 </html>

@@ -53,6 +53,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     screenshotsSection.style.display = 'block';
     screenshotsSection.classList.remove('empty');
 
+    const hideNav = screenshots.length <= 1;
+    if (prevBtn) prevBtn.style.display = hideNav ? 'none' : '';
+    if (nextBtn) nextBtn.style.display = hideNav ? 'none' : '';
+
     const scrollAmount = 380;
 
     const updateButtons = () => {

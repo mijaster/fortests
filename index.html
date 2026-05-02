@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijaster Studios</title>
+    <title>Figura Team</title>
     <link rel="stylesheet" href="css/base/reset.css">
     <link rel="stylesheet" href="css/base/variables.css">
     <link rel="stylesheet" href="css/base/fonts.css">
@@ -71,28 +71,9 @@
             </div>
         </section>
 
-        <section class="news-section">
-            <div class="last-new" id="last-news-container"></div>
+        <section class="last-update-section">
+            <div id="last-update-container"></div>
         </section>
-
-        <div id="newsModal" class="news-modal">
-            <div class="news-modal-content">
-                <div class="modal-banner-container">
-                    <img id="modalBanner" class="modal-banner" src="" alt="News banner">
-                    <div class="modal-gallery-controls">
-                        <button class="modal-gallery-btn modal-prev-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button class="modal-gallery-btn modal-next-btn"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                    <div class="modal-gallery-pagination" id="modalPagination"></div>
-                </div>
-                <div class="modal-body">
-                    <p id="modalDate" class="modal-date"></p>
-                    <h3 id="modalTitle" class="modal-title"></h3>
-                    <p id="modalText" class="modal-text"></p>
-                </div>
-            </div>
-            <div class="close-modal" onclick="closeNewsModal()">&times;</div>
-        </div>
 
         <section class="games-section" id="our-games">
             <h2 class="header-games">Наши игры</h2>
@@ -106,8 +87,8 @@
 
                     <div class="many-btns">
                         <a href="#" class="game-link">новости</a>
-                        <a href="#" class="game-link">трейлеры</a>
-                        <a href="dev-single.html?id=ms" class="game-link about-studio">о студии</a>
+                        <a href="trailers.html" class="game-link">трейлеры</a>
+                        <a href="dev-single.html?id=figura" class="game-link about-studio">о нас</a>
                     </div>
                 </div>
             </div>
@@ -127,12 +108,11 @@
     </script>
 
 
-    <script src="js/pages/index/index.js" defer></script>
     <script src="js/main/loadGames.js" defer></script>
     <script src="js/pages/index/setBanner.js" defer></script>
     <script type="module">
-        import { loadLatestNews } from './js/pages/index/newsFeed.js';
-        document.addEventListener('DOMContentLoaded', loadLatestNews);
+        import { loadLastUpdate } from './js/pages/index/lastUpdate.js';
+        document.addEventListener('DOMContentLoaded', loadLastUpdate);
     </script>
 
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Новости студии</title>
+  <link rel="stylesheet" href="css/pages/news.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Новости студии</h1>
+    <div id="news-container" class="news-grid"></div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-date"></p>
+      <div id="modal-body"></div>
+      <div id="modal-media"></div>
+      <div id="modal-links"></div>
+    </div>
+  </div>
+
+  <script src="js/pages/news/loadNews.js"></script>
+</body>
+</html>

@@ -1,12 +1,59 @@
-{
-    "news": [
-        {
-            "date": "07-09-2025",
-            "title": "Выход D.I.E. : rework",
-            "text": "",
-            "covers": [
-                "assets/pages/news/test_cover.jpg"
-            ]
-        }
+[
+  {
+    "id": 1,
+    "title": "Вышел трейлер новой игры «Nova Rift»",
+    "preview": "Ознакомьтесь с захватывающим трейлером нашей новой космической RPG.",
+    "image": "https://via.placeholder.com/300x200?text=Trailer+Nova+Rift",
+    "date": "2025-04-01",
+    "content": "<p>Мы рады представить первый трейлер нашей новой игры <strong>Nova Rift</strong> — эпической космической RPG с открытым миром.</p><p>Игра выйдет в 2026 году на PC и консолях.</p>",
+    "video": "assets/pages/news/videos/nova-rift-trailer.mp4",
+    "links": [
+      {
+        "url": "https://example.com/nova-rift",
+        "text": "Официальный сайт"
+      },
+      {
+        "url": "https://store.epicgames.com/nova-rift",
+        "text": "Предзаказ на Epic Games"
+      }
     ]
-}
+  },
+  {
+    "id": 2,
+    "title": "Обновление 1.5 для «Shadow Tactics: Reborn»",
+    "preview": "Добавлен новый режим и улучшена графика.",
+    "image": "https://via.placeholder.com/300x200?text=Update+1.5",
+    "date": "2025-03-25",
+    "content": "<p>Вышло крупное обновление 1.5 для <strong>Shadow Tactics: Reborn</strong>.</p><ul><li>Новый кооперативный режим</li><li>Улучшенные текстуры 4K</li><li>Исправлены баги</li></ul>",
+    "video": null,
+    "images": [
+      "assets/pages/news/images/coop-mode.jpg",
+      "assets/pages/news/images/graphics-upgrade.jpg"
+    ],
+    "links": [
+      {
+        "url": "https://example.com/patch-notes-1.5",
+        "text": "Примечания к патчу"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Анонсирована мобильная игра «Pixel Arena»",
+    "preview": "Новая аркада для iOS и Android уже в мае!",
+    "image": "https://via.placeholder.com/300x200?text=Pixel+Arena",
+    "date": "2025-03-20",
+    "content": "<p>Мы запускаем <strong>Pixel Arena</strong> — быструю PvP-аркаду с пиксельной графикой и системой рангов.</p>",
+    "video": "assets/pages/news/videos/pixel-arena-trailer.mp4",
+    "links": [
+      {
+        "url": "https://apps.apple.com/pixel-arena",
+        "text": "App Store"
+      },
+      {
+        "url": "https://play.google.com/store/apps/details?id=pixel.arena",
+        "text": "Google Play"
+      }
+    ]
+  }
+]

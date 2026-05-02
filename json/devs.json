@@ -1,13 +1,13 @@
 {
-    "ms": {
-        "name": "Mijaster Studios",
-        "logo": "icon.svg",
+    "figura": {
+        "name": "Figura Team",
+        "logo": "figura_logo.svg",
         "banner": "banner.mp4",
         "description": "",
         "contacts": [
-            "https://www.youtube.com/@mijaster_studios",
-            "https://t.me/mijastervibe",
-            "https://discord.gg/GS6fVXfG"
+            "https://www.youtube.com/@figura_team",
+            "https://t.me/figura_team",
+            "https://discord.gg/YAQaGCXqeJ"
         ],
         "screens": [
             "1.png",
@@ -15,7 +15,34 @@
             "3.png",
             "4.png"
         ],
-        "bg": "linear-gradient(180deg, #2b2b2b 0%, #000000 100%)"
+        "members": [
+            {
+                "name": "Some_Mijaster",
+                "avatar": "mijaster.jpg",
+                "description": "Скриптер",
+                "contacts": [
+                    "https://t.me/mijastervibe",
+                    "https://youtube.com/@some_mijaster"
+                ]
+            },
+            {
+                "name": "Marsss_",
+                "avatar": "mars.jpg",
+                "description": "",
+                "contacts": [
+                    "https://t.me/mars_amTG",
+                    "https://youtube.com/@mars_am"
+                ]
+            },
+            {
+                "name": "Kerony",
+                "avatar": "kerony.jpg",
+                "description": "Скинмейкер",
+                "contacts": [
+                    "https://t.me/kerony"
+                ]
+            }
+        ]
     },
     "cube": {
         "name": "Cube",

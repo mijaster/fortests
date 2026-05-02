@@ -74,7 +74,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 120px;
+    width: 120px;
     opacity: 1;
     animation: zoomIn 2s ease;
     transition: all 0.5s ease;
@@ -390,6 +390,186 @@ main {
 
 .read-more-btn:hover {
     background: rgba(255, 255, 255, 0.2);
+}
+
+.last-update-section {
+    position: relative;
+    background: linear-gradient(to bottom, var(--light-bg-color) 0%, var(--light-bg-color) 50%, #04040a 50%, #04040a 100%)
+}
+
+.last-update-wrapper {
+    width: 1160px;
+    max-width: calc(100% - 60px);
+    margin: 0 auto;
+    display: flex;
+    gap: 0; /* Remove gap since we're overlapping */
+    align-items: stretch;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    height: 280px; /* Fixed height as requested */
+    min-height: 280px;
+    animation: fadeInUp 1s ease;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.update-badge {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    /* background-color: var(--accent-color); */
+    border: var(--accent-color) 1px solid;
+    color: white;
+    padding: 8px 14px;
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(5px);
+    font-size: 13px;
+    font-weight: bold;
+    z-index: 3;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    align-items: center;
+}
+
+.last-update-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.last-update-link:hover {
+    text-decoration: none;
+}
+
+.last-update-card {
+    height: 100%;
+}
+
+.last-update-link .last-update-card {
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.last-update-link:hover .last-update-card {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.last-update-wrapper:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+/* Container for the cover image */
+.last-update-wrapper .update-cover {
+    margin-left: -24%;
+    width: 80%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Lower z-index to be behind the info */
+    mask-image: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0) 80%);
+    transition: filter 0.5s ease;
+    filter: saturate(10%);
+}
+
+.last-update-wrapper .update-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.5s ease;
+}
+
+.last-update-wrapper:hover .update-cover {
+    filter: saturate(100%);
+}
+
+/* Mask for the cover image transition */
+.last-update-wrapper .update-cover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px; /* Width of the transition */
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Info section that works as an overlay */
+.last-update-wrapper .update-info {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 75%;
+    height: 100%;
+    padding: 30px 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space between content and actions */
+    background: transparent;
+    z-index: 2;
+}
+
+.last-update-wrapper .update-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.last-update-wrapper .update-game-name {
+    margin-top: 20px;
+    font-size: 18px;
+    color: var(--text-color);
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.last-update-wrapper .update-date {
+    color: var(--text-secondary);
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.last-update-wrapper .update-title {
+    font-size: 26px;
+    margin: 15px 0 15px;
+    color: var(--text-color);
+    line-height: 1.2;
+    word-wrap: break-word;
+    align-self: flex-start;
+    font-family: 'DrukWide', sans-serif;
+}
+
+.last-update-wrapper .update-text {
+    display: none; /* Hide the text under the title as requested */
+}
+
+.last-update-wrapper .update-actions {
+    align-self: flex-end; /* Align button to the right */
+    margin-top: auto; /* Push actions to the bottom */
+}
+
+.last-update-wrapper .update-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    white-space: nowrap;
+}
+
+.last-update-wrapper .update-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 .news-modal {

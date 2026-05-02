@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  if (devId != "ms") {
-    document.getElementById('header-games').textContent = 'Совместные игры с Mijaster Studios';
+  if (devId != "figura") {
+    document.getElementById('header-games').textContent = 'Совместные игры с Figura';
   }
 
   fetch('json/devs.json')

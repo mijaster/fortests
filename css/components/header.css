@@ -24,7 +24,7 @@ header {
 }
 
 header .logo {
-    height: 2.1cap;
+    height: 3.1cap;
     width: auto;
     animation: bounceIn 2s ease-in-out;
     transition: height 0.3s ease;
@@ -35,7 +35,7 @@ header.scrolled {
 }
 
 header.scrolled .logo {
-    height: 1.9cap;
+    height: 2.7cap;
 }
 
 .nav-menu {

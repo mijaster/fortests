@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const devId = urlParams.get('id');
 
         const isDevPage = currentPage === 'dev-single.html';
-        const showOnlyCollabWithMs = isDevPage && devId !== 'ms';
+        const showOnlyCollabWithFgr = isDevPage && devId !== 'figura';
 
         const projects = gamesData.projects;
         const tagsList = gamesData.tags;
@@ -26,14 +26,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (!isReleased && !game.id.startsWith('!secret')) {
                     return false;
                 }
-
+                
                 if (isDevPage) {
                     const devs = Array.isArray(game.dev) ? game.dev : [];
                     return devs.includes(devId);
                 }
-                if (showOnlyCollabWithMs) {
+                if (showOnlyCollabWithFgr) {
                     const devs = Array.isArray(game.dev) ? game.dev : [];
-                    return devs.includes('ms') && devs.length > 1;
+                    return devs.includes('figura') && devs.length > 1;
                 }
                 return true;
             });
