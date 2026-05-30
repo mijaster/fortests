@@ -23,9 +23,9 @@ function findLatestUpdate(projects) {
   let latest = null;
 
   Object.entries(projects).forEach(([gameId, game]) => {
-    if (!Array.isArray(game.updates)) return;
+    if (!Array.isArray(game.activities)) return;
 
-    game.updates.forEach(update => {
+    game.activities.forEach(update => {
       const updateDate = parseUpdateDate(update.date);
       if (isNaN(updateDate)) return;
 

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Конструктор конфигов</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/base/reset.css" />
+  <link rel="stylesheet" href="css/base/variables.css" />
+  <link rel="stylesheet" href="css/base/fonts.css" />
+  <link rel="stylesheet" href="css/base/animations.css" />
+  <link rel="stylesheet" href="css/base/main.css" />
+  <link rel="stylesheet" href="css/components/header.css" />
+  <link rel="stylesheet" href="css/components/footer.css" />
+  <link rel="stylesheet" href="css/components/preloader.css" />
+  <link rel="stylesheet" href="css/pages/config-builder.css" />
+  <link rel="icon" href="assets/images/logo_icon.svg" />
+</head>
+<body>
+  <!-- <div id="preloader-container" class="preloader"></div> -->
+  <header id="header-container"></header>
+
+  <main class="config-builder-page">
+    <section class="builder-header">
+      <div class="container">
+        <h1>Конструктор конфигов</h1>
+        <p>Создавайте и редактируйте файлы <code>games.json</code> и <code>devs.json</code> прямо из интерфейса. Скачивайте результат в виде готового JSON.</p>
+      </div>
+    </section>
+
+    <section class="builder-content">
+      <div class="container builder-grid">
+        <aside class="builder-panel builder-sidebar">
+          <div class="builder-tabs">
+            <button type="button" class="tab-button active" data-mode="games">games.json</button>
+            <button type="button" class="tab-button" data-mode="devs">devs.json</button>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Выбор записи</div>
+            <select id="entry-selector" class="select-box"></select>
+            <div class="row gap-small">
+              <button id="new-entry-button" class="btn btn-secondary" type="button">Добавить запись</button>
+              <button id="delete-entry-button" class="btn btn-danger" type="button">Удалить</button>
+            </div>
+            <label class="field-label" for="new-entry-key">Ключ новой записи</label>
+            <input id="new-entry-key" class="text-input" type="text" placeholder="например, new_game" />
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Сохранение</div>
+            <button id="save-item-button" class="btn btn-primary" type="button">Сохранить запись</button>
+            <button id="download-config-button" class="btn btn-primary" type="button">Скачать файл</button>
+            <button id="copy-config-button" class="btn btn-secondary" type="button">Копировать JSON</button>
+          </div>
+
+          <div class="panel-section builder-notes">
+            <div class="panel-title">Подсказка</div>
+            <p>Редактируйте отдельные записи или весь файл целиком.</p>
+            <p>Если хотите создать новую запись, введите уникальный ключ и нажмите «Добавить запись».</p>
+          </div>
+        </aside>
+
+        <section class="builder-panel builder-main">
+          <div class="panel-section">
+            <div class="panel-title">Объект записи</div>
+            <textarea id="item-json-editor" class="json-editor" spellcheck="false"></textarea>
+            <div class="editor-footer">
+              <span id="editor-status" class="status-message"></span>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Текущий файл</div>
+            <textarea id="full-config-output" class="full-json-output" readonly spellcheck="false"></textarea>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer-container"></footer>
+
+  <script src="js/main/burger_menu.js" defer></script>
+  <script src="js/main/components_loader.js" defer></script>
+  <script src="js/main/header_scroll.js" defer></script>
+  <script src="js/main/animations.js" defer></script>
+  <script src="js/main/preloader.js" defer></script>
+  <script src="js/pages/config-builder.js" defer></script>
+</body>
+</html>

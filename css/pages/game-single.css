@@ -241,13 +241,13 @@
   background-color: var(--bg-secondary);
 }
 
-.updates-section {
+.activities-section {
   margin: 60px 0;
   text-align: center;
   background-color: var(--bg-secondary);
 }
 
-.updates-container {
+.activities-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 380px));
   gap: 20px;
@@ -351,6 +351,7 @@
   position: relative;
   z-index: 3;
   word-break: break-word;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }

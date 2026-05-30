@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (!gameId) return;
 
-  const updatesSection = document.getElementById('updates-section');
-  const updatesContainer = document.getElementById('updates-container');
+  const activitiesSection = document.getElementById('activities-section');
+  const activitiesContainer = document.getElementById('activities-container');
   const updateModal = document.getElementById('update-modal');
   const updateModalClose = document.getElementById('update-modal-close');
   const updateModalContent = document.getElementById('update-modal-content');
 
-  if (!updatesSection || !updatesContainer || !updateModal || !updateModalClose || !updateModalContent) return;
+  if (!activitiesSection || !activitiesContainer || !updateModal || !updateModalClose || !updateModalContent) return;
 
   // --- Функция парсинга текста ---
     function parseTextFormatting(text) {
@@ -83,14 +83,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const data = await response.json();
     const game = data.projects?.[gameId];
 
-    if (!game || !Array.isArray(game.updates) || game.updates.length === 0) {
-      updatesSection.style.display = 'none';
+    if (!game || !Array.isArray(game.activities) || game.activities.length === 0) {
+      activitiesSection.style.display = 'none';
       return;
     }
 
-    const updates = game.updates;
+    const updates = game.activities;
 
-    updates.forEach((update, index) => {
+    updates.reverse().forEach((update, index) => {
       // Determine cover image
       let coverImage = null;
       if (update.cover) {
@@ -136,10 +136,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
       
       updateCard.addEventListener('click', () => openUpdateModal(update));
-      updatesContainer.appendChild(updateCard);
+      activitiesContainer.appendChild(updateCard);
     });
 
-    updatesSection.style.display = 'block';
+    activitiesSection.style.display = 'block';
 
     const openUpdateModal = (update) => {
       updateModalContent.innerHTML = '';
@@ -281,6 +281,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   } catch (error) {
     console.error('Error loading updates:', error);
-    updatesSection.style.display = 'none';
+    activitiesSection.style.display = 'none';
   }
 });

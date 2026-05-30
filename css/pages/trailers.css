@@ -1,3 +1,7 @@
+body {
+  background: radial-gradient(circle at top, rgba(38, 85, 182, 0.16), transparent 30%), var(--bg-color);
+}
+
 .btn {
   text-transform: lowercase;
 }
