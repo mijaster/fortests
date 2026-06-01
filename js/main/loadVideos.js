@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       };
 
       previewContainer.addEventListener('pointerenter', () => {
-        previewTimeout = setTimeout(showPreview, 1000);
+        previewTimeout = setTimeout(showPreview, 590);
       });
       previewContainer.addEventListener('pointerleave', hidePreview);
 

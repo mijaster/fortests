@@ -92,7 +92,7 @@
           "file": "b.mp4",
           "preview": "b.jpg",
           "title": "BACKROOMS Add-On: Official Launch Trailer",
-          "date": "2026-12-01",
+          "date": "2026-05-01",
           "addToSinglePage": false,
           "addToTrailersPage": true
         },
@@ -100,8 +100,8 @@
           "file": "e.mp4",
           "preview": "e.jpg",
           "title": "ENDER STORM: Official Launch Trailer",
-          "date": "2026-01-02",
-          "addToSinglePage": false,
+          "date": "2026-12-31",
+          "addToSinglePage": true,
           "addToTrailersPage": true
         },
         {
@@ -313,7 +313,7 @@
       "activities": [
         {
           "isFeature": false,
-          "date": "19.05.2026",
+          "date": "19.06.2026",
           "title": "Об игре",
           "cover": "upd.png",
           "blocks": [

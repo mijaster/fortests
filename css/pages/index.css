@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .banner-section {
     margin-top: 0;
     background-color: var(--bg-color);
