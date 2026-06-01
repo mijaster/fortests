@@ -33,11 +33,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       playButton.innerHTML = '<i class="fas fa-play"></i>';
 
       const trailerSrc = `assets/pages/games/${gameId}/trailers/${trailer.file}`;
-      const posterSrc = `assets/pages/games/${gameId}/previews/${trailer.preview}`;
+      const posterSrc = game.poster
+        ? `assets/pages/games/${gameId}/${game.poster}`
+        : `assets/pages/games/${gameId}/previews/${trailer.preview}`;
       const trailerName = trailer.title || 'Трейлер';
 
       const playHandler = () => {
-        window.videoPlayer.play(trailerSrc, posterSrc, trailerName, gameId);
+        window.videoPlayer.play(trailerSrc, posterSrc, trailerName, gameId, false, game.name);
       };
 
       previewImg.addEventListener('click', playHandler);

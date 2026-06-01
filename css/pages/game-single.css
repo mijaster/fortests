@@ -1238,6 +1238,28 @@
     font-size: 22px;
     margin-bottom: 20px;
   }
+
+  #update-modal {
+    text-indent: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding: 0;
+  }
+  .modal-content-container {
+    border-radius: 0;
+  }
+  .update-modal-title {
+    font-size: 18.5px;
+  }
+  .update-modal-date {
+    font-size: 14px;
+  }
+  .update-block {
+    margin-top: 0;
+  }
+  .update-list {
+    margin-left: 0;
+  }
 }
 
 @media (max-width: 550px) {
@@ -1573,4 +1595,3 @@
     font-size: 22px;
   }
 }
-

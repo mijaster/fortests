@@ -258,6 +258,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       updateModal.classList.remove('closing');
       updateModal.classList.add('opening');
+      lockBodyScroll();
+      updateModal.classList.add('opening');
       updateModal.style.display = 'flex';
     };
 
@@ -266,6 +268,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateModal.classList.add('closing');
       setTimeout(() => {
         updateModal.style.display = 'none';
+        unlockBodyScroll();
       }, 300);
     });
 
@@ -275,9 +278,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateModal.classList.add('closing');
         setTimeout(() => {
           updateModal.style.display = 'none';
+          unlockBodyScroll();
         }, 300);
       }
     });
+
+    // Локальные функции блокировки прокрутки
+    let _up_lockY = 0;
+    function lockBodyScroll() {
+      _up_lockY = window.scrollY || window.pageYOffset;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${_up_lockY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    }
+
+    function unlockBodyScroll() {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, _up_lockY || 0);
+    }
 
   } catch (error) {
     console.error('Error loading updates:', error);

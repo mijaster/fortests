@@ -394,7 +394,8 @@ main {
 
 .last-update-section {
     position: relative;
-    background: linear-gradient(to bottom, var(--light-bg-color) 0%, var(--light-bg-color) 50%, #04040a 50%, #04040a 100%)
+    margin-top: -20px;
+    background: linear-gradient(to bottom, var(--light-bg-color) 0%, var(--light-bg-color) 50%, #04040a 50%, #04040a 100%);
 }
 
 .last-update-wrapper {
@@ -570,6 +571,96 @@ main {
 .last-update-wrapper .update-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+@media (max-width: 768px) {
+    .last-update-section {
+        padding: 30px 0 20px;
+    }
+
+    .last-update-wrapper {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        min-height: auto;
+        height: auto;
+        border-radius: var(--border-radius-md);
+    }
+
+    .last-update-wrapper .update-cover {
+        position: relative;
+        margin-left: 0;
+        width: 100%;
+        height: 220px;
+        mask-image: none;
+    }
+
+    .last-update-wrapper .update-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .last-update-wrapper .update-info {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        padding: 24px 22px;
+    }
+
+    .last-update-wrapper .update-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .last-update-wrapper .update-game-name {
+        margin-top: 0;
+        font-size: 16px;
+    }
+
+    .last-update-wrapper .update-date {
+        margin-top: 10px;
+        font-size: 14px;
+        white-space: normal;
+    }
+
+    .last-update-wrapper .update-title {
+        font-size: 24px;
+        margin: 16px 0 12px;
+    }
+
+    .last-update-wrapper .update-actions {
+        align-self: flex-start;
+        margin-top: 18px;
+    }
+
+    .last-update-wrapper .update-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .update-badge {
+        top: 18px;
+        left: 18px;
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .last-update-wrapper .update-cover {
+        height: 180px;
+    }
+
+    .last-update-wrapper .update-title {
+        font-size: 20px;
+    }
+
+    .last-update-wrapper .update-date {
+        font-size: 13px;
+    }
 }
 
 .news-modal {
@@ -1165,5 +1256,8 @@ main {
         height: 100%;
         object-fit: cover;
         min-width: 100%;
+    }
+    .last-update-wrapper {
+        border-radius: 0;
     }
 }

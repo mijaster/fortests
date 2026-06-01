@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadModal.classList.remove('open');
     setTimeout(() => {
       downloadModal.style.display = 'none';
+      unlockBodyScroll();
     }, 300);
   });
 
@@ -33,9 +34,30 @@ document.addEventListener('DOMContentLoaded', () => {
       downloadModal.classList.remove('open');
       setTimeout(() => {
         downloadModal.style.display = 'none';
+        unlockBodyScroll();
       }, 300);
     }
   });
+
+  // Локальные функции блокировки прокрутки
+  let _dl_lockY = 0;
+  function lockBodyScroll() {
+    _dl_lockY = window.scrollY || window.pageYOffset;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${_dl_lockY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }
+
+  function unlockBodyScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, _dl_lockY || 0);
+  }
 
   function getGitHubDownloadLink(filename, gameId) {
     if (filename.startsWith('http')) {
@@ -128,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       downloadModal.style.display = 'flex';
+      lockBodyScroll();
       requestAnimationFrame(() => {
         downloadModal.classList.add('open');
       });

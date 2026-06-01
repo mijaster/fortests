@@ -1,5 +1,6 @@
 class VideoPlayer {
   constructor() {
+    this._scrollLockY = 0;
     this.modal = document.getElementById('video-modal');
     this.video = document.getElementById('video-player');
     this.closeBtn = document.getElementById('video-modal-close');
@@ -14,8 +15,17 @@ class VideoPlayer {
     this.prevTrailerBtn = document.getElementById('prev-trailer');
     this.nextTrailerBtn = document.getElementById('next-trailer');
     this.fullscreenContainer = document.getElementById('video-fullscreen-container');
+    this.videoContainer = document.querySelector('.video-container');
     this.mobilePlayOverlay = document.getElementById('mobile-play-overlay');
     this.rotateHint = document.getElementById('rotate-hint-overlay');
+    this.endOverlay = document.getElementById('video-end-overlay');
+    this.endOverlayCover = document.getElementById('video-end-overlay-cover');
+    this.endOverlayTitle = document.getElementById('video-end-overlay-title');
+    this.endOverlayButton = document.getElementById('video-end-overlay-button');
+    this.currentGameId = null;
+    this.currentGameName = '';
+    this.currentVideoTitle = '';
+    this.currentPoster = '';
 
     this.hideControlsTimeout = null;
 
@@ -25,6 +35,18 @@ class VideoPlayer {
     }
 
     this.initEvents();
+  }
+
+  isMobileDevice() {
+    try {
+      const ua = navigator.userAgent || '';
+      const smallScreen = Math.min(window.innerWidth, window.innerHeight) <= 768;
+      const touch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+      const mobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+      return touch && (mobileUA || smallScreen);
+    } catch (e) {
+      return false;
+    }
   }
 
   waitForElements() {
@@ -43,8 +65,13 @@ class VideoPlayer {
       this.prevTrailerBtn = document.getElementById('prev-trailer');
       this.nextTrailerBtn = document.getElementById('next-trailer');
       this.fullscreenContainer = document.getElementById('video-fullscreen-container');
+      this.videoContainer = document.querySelector('.video-container');
       this.mobilePlayOverlay = document.getElementById('mobile-play-overlay');
       this.rotateHint = document.getElementById('rotate-hint-overlay');
+      this.endOverlay = document.getElementById('video-end-overlay');
+      this.endOverlayCover = document.getElementById('video-end-overlay-cover');
+      this.endOverlayTitle = document.getElementById('video-end-overlay-title');
+      this.endOverlayButton = document.getElementById('video-end-overlay-button');
 
       if (this.modal && this.video && this.fullscreenContainer) {
         observer.disconnect();
@@ -60,21 +87,41 @@ class VideoPlayer {
       if (e.target === this.modal) this.close();
     });
 
-    this.video.addEventListener('click', () => this.togglePlay());
+    // On mobile, tapping the video toggles play/pause inside the already opened fullscreen modal.
+    this.video.addEventListener('click', () => {
+      this.togglePlay();
+    });
+    // Prevent duplicate handlers on touch devices
+    this.video.addEventListener('touchend', (e) => {
+      e.stopPropagation();
+    }, { passive: true });
     this.playPauseBtn.addEventListener('click', () => this.togglePlay());
 
     this.video.addEventListener('play', () => {
+      this.hideEndOverlay();
       this.playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      if (this.videoContainer) this.videoContainer.classList.remove('paused');
       this.showControls();
     });
 
     this.video.addEventListener('pause', () => {
       this.playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+      if (this.videoContainer && !this.video.ended) this.videoContainer.classList.add('paused');
+      this.showControls();
+      if (this.fullscreenContainer) {
+        this.fullscreenContainer.classList.remove('hide-left');
+        this.fullscreenContainer.classList.add('controls-visible');
+      }
+    });
+
+    this.video.addEventListener('ended', () => {
+      if (this.videoContainer) this.videoContainer.classList.remove('paused');
     });
 
     this.video.addEventListener('timeupdate', () => {
       const value = (this.video.currentTime / this.video.duration) || 0;
       this.progressBar.value = value;
+      this.progressBar.style.setProperty('--progress', (value * 100).toFixed(2));
       this.currentTimeEl.textContent = this.formatTime(this.video.currentTime);
     });
 
@@ -84,6 +131,7 @@ class VideoPlayer {
 
     this.progressBar.addEventListener('input', () => {
       this.video.currentTime = this.video.duration * this.progressBar.value;
+      this.progressBar.style.setProperty('--progress', (this.progressBar.value * 100).toFixed(2));
     });
 
     this.muteBtn.addEventListener('click', () => {
@@ -95,16 +143,25 @@ class VideoPlayer {
       this.video.volume = this.volumeBar.value;
       this.video.muted = this.volumeBar.value == 0;
       this.updateMuteIcon();
+      this.volumeBar.style.setProperty('--volume-progress', (this.volumeBar.value * 100).toFixed(2));
     });
 
     this.fullscreenBtn.addEventListener('click', () => {
       this.toggleFullscreen();
     });
 
-    document.addEventListener('mousemove', () => this.handleMouseMove());
-    document.addEventListener('touchstart', () => this.handleMouseMove(), { passive: true });
-    document.addEventListener('touchmove', () => this.handleMouseMove(), { passive: true });
+    document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    document.addEventListener('touchstart', (e) => this.handleMouseMove(e), { passive: true });
+    document.addEventListener('touchmove', (e) => this.handleMouseMove(e), { passive: true });
     document.addEventListener('keydown', (e) => this.handleKeydown(e));
+
+    if (this.endOverlayButton) {
+      this.endOverlayButton.addEventListener('click', (e) => {
+        if (!this.currentGameId) {
+          e.preventDefault();
+        }
+      });
+    }
 
     document.addEventListener('fullscreenchange', () => this.onFullscreenChange());
     document.addEventListener('webkitfullscreenchange', () => this.onFullscreenChange());
@@ -113,14 +170,26 @@ class VideoPlayer {
     window.addEventListener('resize', () => this.handleOrientation());
 
     this.updateMuteIcon();
-    this.volumeBar.value = 0.8;
-    this.video.volume = 0.8;
+    this.volumeBar.value = 1;
+    this.video.volume = 1;
+    this.volumeBar.style.setProperty('--volume-progress', '100');
 
-    if (this.mobilePlayOverlay) {
-      this.mobilePlayOverlay.addEventListener('click', () => {
-        this.video.play().catch(() => {});
-        this.mobilePlayOverlay.style.display = 'none';
-      });
+    // Adjust visible controls after initialization
+    this.applyMobileControlVisibility();
+
+  }
+
+  applyMobileControlVisibility() {
+    try {
+      if (this.isMobileDevice()) {
+        if (this.playPauseBtn) this.playPauseBtn.style.display = 'none';
+        if (this.fullscreenBtn) this.fullscreenBtn.style.display = 'none';
+      } else {
+        if (this.playPauseBtn) this.playPauseBtn.style.display = '';
+        if (this.fullscreenBtn) this.fullscreenBtn.style.display = '';
+      }
+    } catch (e) {
+      // silent
     }
   }
 
@@ -129,7 +198,32 @@ class VideoPlayer {
     this.muteBtn.innerHTML = `<i class="fas ${icon}"></i>`;
   }
 
-  handleMouseMove() {
+  handleMouseMove(e) {
+    const isFs = this.isFullscreen();
+
+    let x = null;
+    if (e) {
+      if (typeof e.clientX === 'number') x = e.clientX;
+      else if (e.touches && e.touches[0]) x = e.touches[0].clientX;
+      else if (e.changedTouches && e.changedTouches[0]) x = e.changedTouches[0].clientX;
+    }
+
+    // If in fullscreen and we have coordinates, hide controls when cursor is on left side
+    if (isFs && x !== null) {
+      const threshold = Math.min(5, Math.floor(window.innerWidth * 0.18));
+      if (x < threshold) {
+        if (this.controls) this.controls.classList.add('hidden');
+        if (this.fullscreenContainer) {
+          this.fullscreenContainer.classList.remove('controls-visible');
+          this.fullscreenContainer.classList.add('hide-left');
+        }
+        this.clearHideTimeout();
+        return;
+      } else {
+        if (this.fullscreenContainer) this.fullscreenContainer.classList.remove('hide-left');
+      }
+    }
+
     this.showControls();
   }
 
@@ -137,15 +231,19 @@ class VideoPlayer {
     const isFullscreen = this.isFullscreen();
 
     this.controls.classList.remove('hidden');
+    if (this.fullscreenContainer) this.fullscreenContainer.classList.add('controls-visible');
     this.fullscreenContainer.classList.remove('hide-cursor');
 
     this.clearHideTimeout();
-    this.hideControlsTimeout = setTimeout(() => {
-      if (!this.video.paused) {
-        this.controls.classList.add('hidden');
-        this.fullscreenContainer.classList.add('hide-cursor');
-      }
-    }, 2000);
+    if (isFullscreen) {
+      this.hideControlsTimeout = setTimeout(() => {
+        if (!this.video.paused) {
+          this.controls.classList.add('hidden');
+          if (this.fullscreenContainer) this.fullscreenContainer.classList.remove('controls-visible');
+          this.fullscreenContainer.classList.add('hide-cursor');
+        }
+      }, 2000);
+    }
   }
 
   clearHideTimeout() {
@@ -153,6 +251,43 @@ class VideoPlayer {
       clearTimeout(this.hideControlsTimeout);
       this.hideControlsTimeout = null;
     }
+  }
+
+  showEndOverlay() {
+    if (!this.endOverlay) return;
+
+    this.video.classList.add('video-ended');
+    this.endOverlay.classList.add('active');
+
+    if (this.endOverlayCover) {
+      if (this.currentPoster) {
+        this.endOverlayCover.src = this.currentPoster;
+        this.endOverlayCover.alt = `${this.currentGameName || this.currentVideoTitle || 'Игра'} — обложка`;
+        this.endOverlayCover.style.display = 'block';
+      } else {
+        this.endOverlayCover.style.display = 'none';
+      }
+    }
+
+    if (this.endOverlayTitle) {
+      this.endOverlayTitle.textContent = this.currentGameName || this.currentVideoTitle || 'Видео закончилось';
+    }
+
+    if (this.endOverlayButton) {
+      if (this.currentGameId) {
+        this.endOverlayButton.href = `game-single.html?id=${this.currentGameId}`;
+        this.endOverlayButton.style.display = 'inline-flex';
+      } else {
+        this.endOverlayButton.style.display = 'none';
+      }
+    }
+  }
+
+  hideEndOverlay() {
+    if (this.endOverlay) {
+      this.endOverlay.classList.remove('active');
+    }
+    this.video.classList.remove('video-ended');
   }
 
   togglePlay() {
@@ -171,6 +306,10 @@ class VideoPlayer {
   }
 
   toggleFullscreen() {
+    if (this.isMobileDevice()) {
+      return;
+    }
+
     const isFullscreen = this.isFullscreen();
 
     if (!isFullscreen) {
@@ -211,9 +350,17 @@ class VideoPlayer {
     if (enable) {
       this.fullscreenContainer.classList.add('mobile-fullscreen');
       document.body.style.overflow = 'hidden';
+      if (this.isMobileDevice()) {
+        this.enterLandscape();
+      }
     } else {
       this.fullscreenContainer.classList.remove('mobile-fullscreen');
       document.body.style.overflow = '';
+    }
+    // Apply rotation class for fallback on mobile
+    if (this.isMobileDevice()) {
+      if (enable) this.fullscreenContainer.classList.add('mobile-rotated');
+      else this.fullscreenContainer.classList.remove('mobile-rotated');
     }
     this.onFullscreenChange();
   }
@@ -224,6 +371,17 @@ class VideoPlayer {
     this.fullscreenBtn.innerHTML = `<i class="fas ${icon}"></i>`;
     this.showControls();
     this.handleOrientation();
+    // Re-apply control visibility in case device/orientation changed
+    this.applyMobileControlVisibility();
+    // On mobile devices, when entering fullscreen ensure rotated layout for landscape
+    if (this.isMobileDevice()) {
+      if (isFullscreen) {
+        this.fullscreenContainer.classList.add('mobile-rotated');
+      } else {
+        this.fullscreenContainer.classList.remove('mobile-rotated');
+      }
+    }
+    // keep controls-visible state; showControls() handles adding/removing classes
   }
 
   enterLandscape() {
@@ -256,6 +414,9 @@ class VideoPlayer {
     } else {
       this.hideRotateHint();
     }
+
+    // Also update control visibility when orientation/size changes
+    this.applyMobileControlVisibility();
   }
 
   showRotateHint() {
@@ -270,15 +431,49 @@ class VideoPlayer {
     }
   }
 
-  play(src, poster = '', title = 'Видео', gameId = null, showNav = false) {
+  play(src, poster = '', title = 'Видео', gameId = null, showNav = false, gameName = '') {
+    this.currentGameId = gameId;
+    this.currentGameName = gameName;
+    this.currentVideoTitle = title;
+    this.currentPoster = poster;
+
     this.video.src = src;
     this.video.poster = poster;
+
+    if (this.endOverlayCover) {
+      this.endOverlayCover.src = poster || '';
+      this.endOverlayCover.alt = `${gameName || title || 'Игра'} — обложка`;
+    }
+
+    if (this.endOverlayTitle) {
+      this.endOverlayTitle.textContent = gameName || title || 'Видео';
+    }
+
+    if (this.endOverlayButton) {
+      if (gameId) {
+        this.endOverlayButton.href = `game-single.html?id=${gameId}`;
+        this.endOverlayButton.style.display = 'inline-flex';
+      } else {
+        this.endOverlayButton.style.display = 'none';
+      }
+    }
+
+    this.hideEndOverlay();
 
     this.prevTrailerBtn.style.display = showNav ? 'flex' : 'none';
     this.nextTrailerBtn.style.display = showNav ? 'flex' : 'none';
 
+    this.lockBodyScroll();
     this.modal.classList.add('active');
     this.video.load();
+
+    if (this.videoContainer) {
+      this.videoContainer.classList.add('paused');
+    }
+
+    if (this.isMobileDevice()) {
+      this.fullscreenContainer.classList.remove('mobile-fullscreen', 'mobile-rotated');
+    }
 
     this.video.onloadedmetadata = () => {
       this.durationEl.textContent = this.formatTime(this.video.duration);
@@ -300,9 +495,38 @@ class VideoPlayer {
 
     this.video.pause();
     this.video.currentTime = 0;
+    if (this.videoContainer) this.videoContainer.classList.remove('paused');
     this.modal.classList.remove('active');
     this.clearHideTimeout();
+    this.hideEndOverlay();
     this.video.src = '';
+    this.unlockBodyScroll();
+  }
+
+  lockBodyScroll() {
+    try {
+      this._scrollLockY = window.scrollY || window.pageYOffset;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${this._scrollLockY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    } catch (e) {
+      console.warn('Failed to lock body scroll', e);
+    }
+  }
+
+  unlockBodyScroll() {
+    try {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, this._scrollLockY || 0);
+    } catch (e) {
+      console.warn('Failed to unlock body scroll', e);
+    }
   }
 
   handleKeydown(e) {
@@ -335,6 +559,7 @@ class VideoPlayer {
         this.video.volume = Math.min(1, this.video.volume + 0.1);
         this.video.muted = (this.video.volume === 0);
         this.volumeBar.value = this.video.volume;
+        this.volumeBar.style.setProperty('--volume-progress', (this.video.volume * 100).toFixed(2));
         this.updateMuteIcon();
         handled = true;
         break;
@@ -344,6 +569,7 @@ class VideoPlayer {
         this.video.volume = Math.max(0, this.video.volume - 0.1);
         this.video.muted = (this.video.volume === 0);
         this.volumeBar.value = this.video.volume;
+        this.volumeBar.style.setProperty('--volume-progress', (this.video.volume * 100).toFixed(2));
         this.updateMuteIcon();
         handled = true;
         break;
@@ -363,6 +589,12 @@ class VideoPlayer {
 
       case 'Escape':
         if (this.isFullscreen()) {
+          // show controls before exiting fullscreen so user sees them
+          this.showControls();
+          if (this.fullscreenContainer) {
+            this.fullscreenContainer.classList.remove('hide-left');
+            this.fullscreenContainer.classList.add('controls-visible');
+          }
           this.toggleFullscreen();
         } else {
           this.close();

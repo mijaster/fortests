@@ -79,7 +79,40 @@
           ]
         }
       ],
-      "trailers": [],
+      "trailers": [
+        {
+          "file": "s.mp4",
+          "preview": "s.jpg",
+          "title": "SHADOWS - Cinematic Game Trailer",
+          "date": "2026-05-31",
+          "addToSinglePage": false,
+          "addToTrailersPage": true
+        },
+        {
+          "file": "b.mp4",
+          "preview": "b.jpg",
+          "title": "BACKROOMS Add-On: Official Launch Trailer",
+          "date": "2026-12-01",
+          "addToSinglePage": false,
+          "addToTrailersPage": true
+        },
+        {
+          "file": "e.mp4",
+          "preview": "e.jpg",
+          "title": "ENDER STORM: Official Launch Trailer",
+          "date": "2026-01-02",
+          "addToSinglePage": false,
+          "addToTrailersPage": true
+        },
+        {
+          "file": "p.mp4",
+          "preview": "p.jpg",
+          "title": "Pizza Time! - OFFICIAL TRAILER | Minecraft Map",
+          "date": "2026-06-03",
+          "addToSinglePage": false,
+          "addToTrailersPage": true
+        }
+      ],
       "indexPage": {
         "backgroundPath": "assets/pages/games/ch/screens/5.png",
         "opacity": 0.5
@@ -237,35 +270,40 @@
           "preview": "test_1.jpg",
           "title": "Poppy Playtime: Chapter 3 - Teaser Trailer #2",
           "date": "2026-01-01",
-          "addToSinglePage": false
+          "addToSinglePage": false,
+          "addToTrailersPage": true
         },
         {
           "file": "main.mp4",
           "preview": "test_2.jpg",
           "title": "Poppy Playtime: Chapter 2 - Official Game Trailer",
           "date": "2026-01-01",
-          "addToSinglePage": false
+          "addToSinglePage": false,
+          "addToTrailersPage": true
         },
         {
           "file": "main.mp4",
           "preview": "test_3.jpg",
           "title": "Poppy Playtime Chapter 4 - Accolades Trailer",
           "date": "2026-01-01",
-          "addToSinglePage": false
+          "addToSinglePage": false,
+          "addToTrailersPage": true
         },
         {
           "file": "main.mp4",
           "preview": "main.png",
           "title": "D.I.E. : rework - анонсирующий трейлер",
           "date": "2026-01-25",
-          "addToSinglePage": true
+          "addToSinglePage": true,
+          "addToTrailersPage": true
         },
         {
           "file": "reanimal.mp4",
           "preview": "reanimal.jpg",
           "title": "REANIMAL Trailer #2",
-          "date": "2026-01-28",
-          "addToSinglePage": false
+          "date": "2026-11-28",
+          "addToSinglePage": false,
+          "addToTrailersPage": true
         }
       ],
       "indexPage": {

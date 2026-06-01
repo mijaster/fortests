@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       modalImg.src = screenshots[currentModalIndex];
       modalImg.alt = `Скриншот ${currentModalIndex + 1} из ${screenshots.length}`;
+      lockBodyScroll();
       modal.classList.remove('closing');
       modal.classList.add('opening');
       modal.style.display = 'flex';
@@ -150,7 +151,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       const containerWidth = modalSlider.clientWidth;
       const itemWidth = activeItem.offsetWidth;
       const itemLeft = activeItem.offsetLeft;
-      const scrollLeft = itemLeft - (containerWidth - itemWidth) / 2;
+      const scrollLeft = Math.min(
+        Math.max(itemLeft - (containerWidth - itemWidth) / 2, 0),
+        modalSlider.scrollWidth - containerWidth
+      );
       modalSlider.scrollTo({ left: scrollLeft, behavior: 'smooth' });
     };
 
@@ -161,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (modal.classList.contains('closing')) {
           modal.style.display = 'none';
           modal.classList.remove('closing');
+          unlockBodyScroll();
         }
       }, 300);
     };
@@ -230,3 +235,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     screenshotsSection.style.display = 'none';
   }
 });
+
+// Локалные функции блокировки прокрутки для модального окна скриншотов
+let _ss_lockY = 0;
+function lockBodyScroll() {
+  _ss_lockY = window.scrollY || window.pageYOffset;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${_ss_lockY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+}
+
+function unlockBodyScroll() {
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  window.scrollTo(0, _ss_lockY || 0);
+}

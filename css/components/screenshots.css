@@ -248,22 +248,29 @@
 }
 
 .modal-thumbnails-container {
+  position: relative;
   width: 100%;
   max-width: 1000px;
   display: flex;
+  align-items: center;
   justify-content: center;
+  padding: 0 55px;
 }
+
 
 .modal-thumbnails-slider {
   display: flex;
   gap: 15px;
   overflow-x: auto;
-  padding: 10px;
+  padding: 10px 0;
+  width: 100%;
   scrollbar-width: none;
   scrollbar-color: #444 #111;
   justify-content: flex-start;
   scroll-snap-type: x mandatory;
   scroll-padding: 10px;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-thumbnails-slider::-webkit-scrollbar {
@@ -285,8 +292,8 @@
 }
 
 .modal-screenshot-item {
-  min-width: 160px;
-  width: 160px;
+  min-width: 150px;
+  width: 150px;
   height: 90px;
   background: #000;
   border-radius: 8px;
@@ -406,13 +413,17 @@
   }
 
   .modal-screenshot-item {
-    min-width: 120px;
-    width: 120px;
-    height: 68px;
+    min-width: 110px;
+    width: 110px;
+    height: 66px;
   }
 
   .modal-thumbnails-container {
     padding: 0 10px;
+  }
+
+  .thumbnails-nav {
+    display: none;
   }
 
   .mobile-tap-hint {
